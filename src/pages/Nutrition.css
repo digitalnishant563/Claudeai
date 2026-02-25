@@ -1,0 +1,418 @@
+.nutrition-page {
+  animation: fadeIn 0.4s ease;
+}
+
+.nutrition-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.nutrition-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.add-meal-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Daily Summary */
+.daily-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.calorie-ring-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.calorie-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.cal-remaining {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+.cal-remaining-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.summary-stats {
+  flex: 1;
+  min-width: 160px;
+}
+
+.summary-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-stat-row:last-child {
+  border-bottom: none;
+}
+
+.ss-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.ss-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ss-value.consumed {
+  color: var(--primary);
+}
+
+.ss-value.remaining {
+  color: var(--success);
+}
+
+.ss-value.over {
+  color: var(--accent);
+}
+
+/* Macro Breakdown */
+.macro-breakdown {
+  flex: 1;
+  min-width: 200px;
+}
+
+.macro-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.macros-row {
+  display: flex;
+  gap: 16px;
+}
+
+.macro-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.circular-chart {
+  width: 70px;
+  height: 70px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #2d3748;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% { stroke-dasharray: 0 100; }
+}
+
+.percentage {
+  fill: var(--text-primary);
+  font-size: 0.5em;
+  text-anchor: middle;
+  font-weight: 700;
+  dominant-baseline: middle;
+}
+
+.macro-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.macro-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Meals */
+.meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.meal-card:hover {
+  border-color: rgba(255, 69, 0, 0.3);
+}
+
+.meal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+
+.meal-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.meal-icon {
+  font-size: 26px;
+}
+
+.meal-type {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.meal-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.meal-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meal-calories {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.expand-btn {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.expand-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.meal-body {
+  border-top: 1px solid var(--border);
+  padding: 14px 20px;
+}
+
+.meal-macros {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.meal-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.meal-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(45, 55, 72, 0.5);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.item-name {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.item-macros {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.item-cal {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.add-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 69, 0, 0.1);
+  border: 1px dashed rgba(255, 69, 0, 0.3);
+  color: var(--primary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+
+.add-item-btn:hover {
+  background: rgba(255, 69, 0, 0.2);
+}
+
+/* Water Tracker */
+.water-tracker {
+  background: var(--bg-card);
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.water-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.water-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.water-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4299e1;
+}
+
+.water-cups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.water-cup {
+  font-size: 22px;
+  opacity: 0.25;
+  transition: all 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.cup-filled {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.1);
+}
+
+.water-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.water-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4299e1, #667eea);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.water-remaining {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.log-water-btn {
+  background: rgba(66, 153, 225, 0.15);
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  color: #4299e1;
+  padding: 9px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.log-water-btn:hover {
+  background: rgba(66, 153, 225, 0.25);
+}
+
+@media (max-width: 768px) {
+  .daily-summary {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .summary-stat-row {
+    text-align: left;
+  }
+}
