@@ -107,7 +107,8 @@ def proof_slot(shot, font_big, font_small):
 class FootageReader:
     def __init__(self, path):
         self.proc = subprocess.Popen(
-            ["ffmpeg", "-v", "error", "-i", path, "-vf", f"scale={W}:{H},fps={FPS}",
+            ["ffmpeg", "-v", "error", "-i", path, "-vf",
+             f"scale={W}:{H}:in_color_matrix=bt709:in_range=tv:out_range=pc,fps={FPS}",
              "-pix_fmt", "rgb24", "-f", "rawvideo", "-"], stdout=subprocess.PIPE)
 
     def next(self):
@@ -117,7 +118,7 @@ class FootageReader:
         return Image.frombuffer("RGB", (W, H), buf).convert("RGBA")
 
 
-def end_card(logo_path, font_small):
+def end_card(logo_path, font_small, annotate):
     img = Image.new("RGBA", (W, H), (255, 255, 255, 255))
     if logo_path:
         logo = Image.open(logo_path).convert("RGBA")
@@ -127,7 +128,7 @@ def end_card(logo_path, font_small):
         target_w = int(W * (0.84 if wide else 0.60))
         logo = logo.resize((target_w, round(logo.height * target_w / logo.width)), Image.LANCZOS)
         img.alpha_composite(logo, ((W - logo.width) // 2, round(H * 0.52 - logo.height / 2)))
-    else:  # proof annotation only, never a substitute logo
+    elif annotate:  # proof renders only: a note, never a substitute logo
         d = ImageDraw.Draw(img)
         msg = "JSDB logo file needed"
         tw = d.textlength(msg, font=font_small)
@@ -185,7 +186,7 @@ def main():
 
     slot_cache = {}
     footage = FootageReader(args.footage) if args.footage else None
-    card = end_card(args.logo, font_small)
+    card = end_card(args.logo, font_small, annotate=args.proof)
 
     start_s = f_a / FPS
     dur_s = (f_b - f_a) / FPS + (0.15 if f_b == total else 0)
@@ -194,6 +195,7 @@ def main():
          "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
          "-ss", f"{start_s:.3f}", "-t", f"{dur_s:.3f}", "-i", args.audio,
          "-map", "0:v", "-map", "1:a",
+         "-vf", "scale=in_range=pc:out_color_matrix=bt709:out_range=tv",
          "-c:v", "libx264", "-preset", args.preset, "-crf", args.crf, "-profile:v", "high",
          "-pix_fmt", "yuv420p", "-r", str(FPS),
          "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
@@ -240,6 +242,9 @@ def main():
         enc.stdin.write(last_bytes)
     enc.stdin.close()
     enc.wait()
+    if footage:  # a partial render leaves the reader mid-stream; stop it without pipe errors
+        footage.proc.kill()
+        footage.proc.wait()
     print("wrote", args.out)
 
 
