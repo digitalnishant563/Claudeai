@@ -42,27 +42,42 @@ if (mode === 'snap') {
   }
 } else {
   const total = Math.ceil((await (await openPage()).evaluate(() => window.DUR)) * FPS);
-  const W = +(wArg || 4), per = Math.ceil(total / W);
+  const W = +(wArg || 4);
+  const F0 = +(process.env.FROM || 0), F1 = +(process.env.TO || total), per = Math.ceil((F1 - F0) / W);
+  const TAG = process.env.TAG || 'p', VERIFY_FROM = +(process.env.VERIFY_FROM ?? Infinity);
   fs.mkdirSync('parts', { recursive: true });
   const t0 = Date.now();
   await Promise.all(Array.from({ length: W }, async (_, w) => {
     const page = await openPage();
-    const a = w * per, b = Math.min(total, a + per);
+    const a = F0 + w * per, b = Math.min(F1, a + per);
     const enc = process.env.HQ
       ? ['-vf', `scale=${VW}:${VH}:flags=lanczos`, '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '15', '-profile:v', 'high', '-level', '4.2', '-g', '60', '-bf', '2']
       : ['-c:v', 'libx264', '-preset', 'medium', '-crf', '18'];
     const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-      ...enc, '-pix_fmt', 'yuv420p', '-r', String(FPS), `parts/p${w}.mp4`], { stdio: ['pipe', 'inherit', 'inherit'] });
+      ...enc, '-pix_fmt', 'yuv420p', '-r', String(FPS), `parts/${TAG}${w}.mp4`], { stdio: ['pipe', 'inherit', 'inherit'] });
     for (let f = a; f < b; f++) {
       await page.evaluate(t => window.seek(t), f / FPS);
-      const buf = await page.screenshot({ type: 'jpeg', quality: process.env.HQ ? 97 : 94 });
+      // let the compositor finish rasterising before capture
+      await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+      const shot = () => page.screenshot({ type: 'jpeg', quality: process.env.HQ ? 97 : 94 });
+      let buf = await shot();
+      if (f >= VERIFY_FROM) {
+        // a half-painted frame encodes smaller (blank tiles); keep shooting until two captures agree
+        for (let k = 0; k < 6; k++) {
+          const nb = await shot();
+          const same = Math.abs(nb.length - buf.length) / buf.length < 0.004;
+          if (nb.length >= buf.length) buf = nb;
+          if (same) break;
+          if (k === 5) console.log('unstable frame', f);
+        }
+      }
       if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
       if (w === 0 && f % 150 === 0) console.log(`worker0 frame ${f - a}/${b - a}  ${((Date.now() - t0) / 1000).toFixed(0)}s`);
     }
     ff.stdin.end();
     await new Promise(r => ff.on('close', r));
   }));
-  fs.writeFileSync('parts/list.txt', Array.from({ length: W }, (_, w) => `file 'p${w}.mp4'`).join('\n'));
+  fs.writeFileSync(`parts/${TAG}list.txt`, Array.from({ length: W }, (_, w) => `file '${TAG}${w}.mp4'`).join('\n'));
   console.log('frames', total, 'time', ((Date.now() - t0) / 1000).toFixed(0) + 's');
 }
 await browser.close();

@@ -2,7 +2,7 @@
 
 Flat 2D animation synced to the Hindi voiceover (ElevenLabs "Sia"), 2:01, 30 fps, in two versions.
 
-- `output/Jan_Seva_Dawa_Bazaar_Reel_9x16_v3_FullHD.mp4`: **latest** vertical reel (1080×1920, 2:04). Rendered 2× supersampled and encoded at high bitrate. The store and pharmacist scenes are fully animated. Store signboards read "JSDB" in the chain shots.
+- `output/Jan_Seva_Dawa_Bazaar_Reel_FullHD_Final.mp4`: **final** vertical reel (1080×1920, 2:04). The outro's white flicker is fixed (frames now wait for full paint before capture). Rendered 2× supersampled and encoded at high bitrate. The store and pharmacist scenes are fully animated. Store signboards read "JSDB" in the chain shots.
 - `output/Jan_Seva_Dawa_Bazaar_Reel_9x16_v2.mp4`: v2. Adds the real JSDB logo, brand colours, new fonts (Bricolage Grotesque + Plus Jakarta Sans), the India expansion map, the fly-through vision scene and the new outro.
 - `output/Jan_Seva_Dawa_Bazaar_Reel_9x16.mp4`: first version of the vertical 1080×1920 reel for Instagram Reels, YouTube Shorts and Meta ads. All on-screen text is in English. It uses word-by-word kinetic text, swipe/push/zoom/iris transitions, camera pans, particles and impact beats.
 - `output/Jan_Seva_Dawa_Bazaar_2D_Animation.mp4`: the landscape 1920×1080 version with Hindi on-screen text.
