@@ -1,0 +1,111 @@
+1
+00:00:01,200 --> 00:00:04,300
+दिल्ली और उसके आसपास फैलता हुआ NCR।
+
+2
+00:00:04,850 --> 00:00:09,450
+यहाँ हर मोहल्ले में, हर दिन, एक ज़रूरत common है — दवाई।
+
+3
+00:00:10,050 --> 00:00:13,600
+लेकिन दवाई जो genuine हो, और जो डॉक्टर ने prescribe की हो,
+
+4
+00:00:13,900 --> 00:00:17,050
+वो भी अच्छे discount पर हो — ये थोड़ा मुश्किल है।
+
+5
+00:00:17,600 --> 00:00:21,000
+इसी ज़रूरत से जन सेवा दवा बाज़ार की शुरुआत हुई।
+
+6
+00:00:21,600 --> 00:00:24,550
+जन सेवा दवा बाज़ार एक retail pharmacy chain है।
+
+7
+00:00:24,950 --> 00:00:29,350
+Company prescription medicines और healthcare products का retail distribution करती है,
+
+8
+00:00:29,750 --> 00:00:33,300
+दिल्ली NCR और गुड़गांव में फैले अपने branch network के through।
+
+9
+00:00:33,800 --> 00:00:36,350
+हर दवाई का सफ़र stock room से शुरू होता है।
+
+10
+00:00:36,800 --> 00:00:41,950
+Procurement सीधा manufacturers और authorized distributors से होता है, bulk quantity में।
+
+11
+00:00:42,400 --> 00:00:48,500
+हर incoming consignment का batch number, manufacturing date और expiry entry के समय record होती है।
+
+12
+00:00:48,950 --> 00:00:50,800
+Stock रखने के अपने नियम हैं।
+
+13
+00:00:51,200 --> 00:00:55,000
+Temperature sensitive products अलग, controlled storage में रखे जाते हैं।
+
+14
+00:00:55,450 --> 00:00:59,450
+Near expiry stock, shelf तक पहुँचने से पहले अलग कर दिया जाता है।
+
+15
+00:00:59,850 --> 00:01:02,150
+हर shelf category-wise arrange होता है —
+
+16
+00:01:02,550 --> 00:01:07,650
+Cardiac, Diabetes, Thyroid, Dermatology, Orthopedic, Pediatric।
+
+17
+00:01:08,000 --> 00:01:11,800
+लगभग 15,000 से ज़्यादा SKUs, हर branch पर।
+
+18
+00:01:12,150 --> 00:01:15,800
+Counter पर हर prescription registered pharmacist verify करता है।
+
+19
+00:01:16,250 --> 00:01:19,450
+Scheduled medicines सिर्फ valid prescription पर issue होती हैं।
+
+20
+00:01:19,850 --> 00:01:24,000
+Billing के समय हर item का batch और expiry दोबारा check होता है।
+
+21
+00:01:24,400 --> 00:01:28,650
+Direct procurement से distribution chain की बीच की layers कम हो जाती हैं।
+
+22
+00:01:29,050 --> 00:01:32,000
+इस structure की saving company pricing में pass करती है —
+
+23
+00:01:32,400 --> 00:01:35,000
+printed MRP पर flat 20%।
+
+24
+00:01:35,400 --> 00:01:38,350
+आज ये system 40 से ज़्यादा branches पर चलता है,
+
+25
+00:01:38,800 --> 00:01:43,650
+और जो customer store तक नहीं आ सकते, उन तक order home delivery के through पहुँचता है।
+
+26
+00:01:44,000 --> 00:01:50,250
+और बहुत जल्द ये branches 100 से ज़्यादा होंगी, जिससे service हर घर तक आसान हो जाएगी।
+
+27
+00:01:50,650 --> 00:01:54,250
+Company का vision network को धीरे-धीरे आगे बढ़ाने का है,
+
+28
+00:01:54,700 --> 00:01:59,100
+ताकि सही दवाई, कम खर्च पर, और ज़्यादा परिवारों तक पहुँच सके।
