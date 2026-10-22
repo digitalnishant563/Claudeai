@@ -1,9 +1,9 @@
 // Shared palette, SVG helpers and illustration generators (flat 2D style).
 const C = {
   ink: '#12324A', ink2: '#2E4D66', ink3: '#5B7489',
-  teal: '#0E8C7A', tealD: '#0A6B5D', tealL: '#3FB8A3',
-  mint: '#CFF3E8', mintL: '#ECFBF6',
-  green: '#2BB673', greenD: '#1E8F58',
+  teal: '#11695A', tealD: '#0B4A42', tealL: '#43A985',
+  mint: '#D2F0DC', mintL: '#EEF9F1',
+  green: '#4DB36B', greenD: '#2E8F4E', lime: '#8CC63F', limeD: '#6FA82C',
   saf: '#FFB627', safD: '#E89A0C', orange: '#FF8A3D',
   coral: '#FF5F5F', coralD: '#E04848', pink: '#FF9BB0',
   sky: '#CDEBFF', skyL: '#EAF6FF', blue: '#3D8BFD', blueD: '#2A6BD1',
@@ -42,11 +42,10 @@ function chip(id, x, y, s, o = {}) {
 }
 
 // ---------- Brand ----------
+// The real JSDB logo (circular badge with transparent corners).
+const LOGO_SRC = 'assets/jsdb_logo.png';
 function logoMark(r = 40) {
-  const a = r * 0.22, b = r * 0.62;
-  return Ci(0, 0, r, C.green) + Ci(0, 0, r * 0.86, 'none', `stroke="#fff" stroke-width="${r * 0.06}" opacity="0.5"`) +
-    R(-a, -b, a * 2, b * 2, '#fff', a * 0.5) + R(-b, -a, b * 2, a * 2, '#fff', a * 0.5) +
-    P(`M${r * 0.18},${r * 0.18} C${r * 0.5},${r * 0.1} ${r * 0.62},${r * 0.4} ${r * 0.55},${r * 0.6} C${r * 0.3},${r * 0.62} ${r * 0.16},${r * 0.45} ${r * 0.18},${r * 0.18}Z`, C.saf);
+  return Ci(0, 0, r, '#fff') + `<image href="${LOGO_SRC}" x="${-r}" y="${-r}" width="${2 * r}" height="${2 * r}"/>`;
 }
 
 // ---------- People ----------
@@ -114,7 +113,7 @@ function storeArt(o = {}) {
   let awn = '';
   const n = 14, sw = W / n;
   for (let i = 0; i < n; i++) {
-    const x = -hw + i * sw, col = i % 2 ? '#FFFFFF' : C.green;
+    const x = -hw + i * sw, col = i % 2 ? '#FFFFFF' : C.lime;
     awn += R(x, -318, sw + 0.5, 46, col) + P(`M${x},-272 A${sw / 2},${sw / 2.2} 0 0 0 ${x + sw},-272Z`, col);
   }
   let goods = '';
@@ -128,18 +127,18 @@ function storeArt(o = {}) {
   });
   return `<g class="store">
     ${shadow(hw + 40, 22, 4)}
-    ${R(-hw, -H, W, H, '#F7F3EA', 10)}
+    ${R(-hw, -H, W, H, '#FFFFFF', 10)}${R(-hw, -H, W, H, 'none', 10, 'stroke="#E3E8EC" stroke-width="4"')}
     ${R(-hw - 16, -H - 20, W + 32, 32, C.tealD, 10)}
-    <g class="sign">${R(-hw + 18, -H + 14, W - 36, 98, C.teal, 16)}
-      ${S(-hw + 80, -H + 63, 1, logoMark(34))}
-      ${T(o.name ? 36 : 48, -H + (o.name ? 80 : 76), o.name || 'Jan Seva Dawa Bazaar', { size: o.signSize || (o.name ? 46 : 34), fill: '#fff', w: 700 })}
+    <g class="sign">${R(-hw + 18, -H + 14, W - 36, 98, o.name ? C.teal : C.lime, 16)}${o.name ? '' : R(-hw + 18, -H + 96, W - 36, 16, C.limeD, 0)}
+      ${S(-hw + 80, -H + 63, 1, logoMark(o.name ? 34 : 42))}
+      ${T(o.name ? 36 : 48, -H + (o.name ? 80 : 76), o.name || 'Jan Seva Dawa Bazaar', { size: o.signSize || (o.name ? 46 : 34), fill: o.name ? '#fff' : C.tealD, w: 800 })}
     </g>
     ${awn}
     <g class="window">${R(-262, -250, 324, 236, '#DFF1FA', 8)}${R(-262, -250, 324, 236, 'none', 8, `stroke="${C.tealD}" stroke-width="10"`)}${goods}
       ${P('M-240,-240 L-170,-240 L-250,-30 L-255,-30Z', '#fff', 'opacity="0.35"')}</g>
     <g class="door">${R(86, -250, 168, 250, C.tealD, 8)}${R(100, -236, 140, 236, '#BFE6F2', 4)}${R(214, -130, 10, 40, C.saf, 4)}
       ${T(170, -170, 'OPEN', { size: 26, fill: C.teal, w: 700 })}</g>
-    ${R(-hw - 10, -10, W + 20, 14, '#D6D0C4', 4)}
+    ${o.name ? R(-hw - 10, -10, W + 20, 14, '#D6D0C4', 4) : R(-hw, -14, W, 18, C.lime, 4)}
     <g class="crossSign" transform="translate(${hw - 6},-372)">${R(0, -4, 34, 8, C.ink2, 3)}<g class="glow">${Ci(64, 0, 40, C.green, 'opacity="0.25"')}</g>${R(46, -36, 36, 72, C.green, 8)}${R(28, -18, 72, 36, C.green, 8)}${R(52, -30, 24, 60, '#fff', 4, 'opacity="0.25"')}</g>
   </g>`;
 }

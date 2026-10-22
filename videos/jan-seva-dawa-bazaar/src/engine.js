@@ -1,6 +1,6 @@
 // Vertical (9:16) reel engine: scenes, kinetic type, transitions, ambient motion.
 const W = 1080, H = 1920;
-const DUR = 121.5;
+const DUR = 124.5;
 gsap.defaults({ lazy: false });
 const tl = gsap.timeline({ paused: true });
 const SCENES = [];
@@ -14,6 +14,12 @@ function scene(id, t0, t1, bg, tr, html, anim, fxCols) {
 function popIn(sel, t, o = {}) {
   tl.fromTo(sel, { scale: o.from ?? 0, opacity: 0, transformOrigin: o.origin || '50% 50%' },
     { scale: 1, opacity: 1, duration: o.d || 0.55, ease: o.ease || 'back.out(1.8)' }, t);
+  const sh = typeof sel === 'string' && document.querySelector(`${sel} .shine`);
+  if (sh) shine(sh, t + 0.35);
+}
+function shine(el, t) {
+  const w = +el.dataset.w;
+  tl.fromTo(el, { x: -w / 2 - 160 }, { x: w / 2 + 160, duration: 0.75, ease: 'power2.inOut' }, t);
 }
 function riseIn(sel, t, o = {}) {
   tl.fromTo(sel, { y: o.y ?? 50, opacity: 0 }, { y: 0, opacity: 1, duration: o.d || 0.6, ease: o.ease || 'power3.out' }, t);
@@ -79,7 +85,8 @@ const card = (w, h, col = '#fff', rx = 32) => R(-w / 2 + 8, -h / 2 + 14, w, h, '
 // ---------- kinetic type ----------
 // '|' breaks lines, *word* highlights. Laid out after fonts load.
 function KT(id, x, y, str, o = {}) {
-  const { size = 80, w = 800, fill = C.ink, hi = C.teal, lh = 1.2, plate = false, mark = C.saf } = o;
+  const { size = 80, w = 800, fill = C.ink, hi = C.teal, lh = 1.12, plate = false, mark = C.saf, sticker = true, chars = false } = o;
+  const stk = sticker ? `stroke="#fff" stroke-width="${(size * 0.15).toFixed(1)}" stroke-linejoin="round" paint-order="stroke"` : '';
   let words = '', inHi = false;
   str.split('|').forEach((line, li) => {
     line.trim().split(/\s+/).forEach(word => {
@@ -88,10 +95,10 @@ function KT(id, x, y, str, o = {}) {
       if (closes) inHi = false;
       const txt = word.replace(/\*/g, '');
       words += `<g class="kw" data-line="${li}" data-join="${isHi && !closes ? 1 : 0}"><g class="wi">${isHi ? `<rect class="mk" x="-8" y="${-size * 0.36}" width="10" height="${size * 0.42}" rx="${size * 0.12}" fill="${mark}" opacity="0.45"/>` : ''}` +
-        `<text class="t" x="0" y="0" font-size="${size}" font-weight="${w}" fill="${isHi ? hi : fill}">${txt}</text></g></g>`;
+        `<text class="d" x="0" y="0" font-size="${size}" font-weight="${w}" fill="${isHi ? hi : fill}" ${stk}>${txt}</text></g></g>`;
     });
   });
-  return `<g id="${id}" class="kt" data-x="${x}" data-y="${y}" data-size="${size}" data-lh="${lh}">${plate ? `<rect class="plate" fill="#fff" rx="36"/>` : ''}${words}</g>`;
+  return `<g id="${id}" class="kt" data-x="${x}" data-y="${y}" data-size="${size}" data-lh="${lh}" data-chars="${chars ? 1 : 0}" ${sticker ? 'filter="url(#ktShadow)"' : ''}>${plate ? `<rect class="plate" fill="#fff" rx="36"/>` : ''}${words}</g>`;
 }
 function layoutKT() {
   document.querySelectorAll('.kt').forEach(g => {
@@ -112,6 +119,15 @@ function layoutKT() {
         cx += ws[i] + sp;
       });
     });
+    if (g.dataset.chars === '1') g.querySelectorAll('.wi > text').forEach(tx => {
+      const s = tx.textContent, offs = [...s].map((_, i) => i ? tx.getSubStringLength(0, i) : 0);
+      [...s].forEach((ch, i) => {
+        const c = tx.cloneNode(); c.textContent = ch; c.setAttribute('x', offs[i].toFixed(1));
+        const wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g'); wrap.setAttribute('class', 'ch'); wrap.appendChild(c);
+        tx.parentNode.insertBefore(wrap, tx);
+      });
+      tx.remove();
+    });
     const pl = g.querySelector('.plate');
     if (pl) {
       const pad = size * 0.45;
@@ -124,8 +140,13 @@ function words(id, t, o = {}) {
   const st = o.st ?? 0.075, size = +document.getElementById(id).dataset.size;
   const n = document.querySelectorAll(`#${id} .wi`).length;
   if (document.querySelector(`#${id} .plate`)) popIn(`#${id} .plate`, t - 0.08, { from: 0.7, d: 0.4 });
-  tl.fromTo(`#${id} .wi`, { y: size * 0.7, opacity: 0, rotation: 8, scale: 0.6, transformOrigin: '0% 100%' },
-    { y: 0, opacity: 1, rotation: 0, scale: 1, duration: 0.55, ease: 'back.out(2.2)', stagger: st }, t);
+  if (document.querySelector(`#${id} .ch`)) {
+    tl.fromTo(`#${id} .ch`, { y: size * 0.9, opacity: 0, rotation: -14, scale: 0.2, transformOrigin: '50% 100%' },
+      { y: 0, opacity: 1, rotation: 0, scale: 1, duration: 0.5, ease: 'back.out(2.6)', stagger: o.cst ?? 0.028 }, t);
+  } else {
+    tl.fromTo(`#${id} .wi`, { y: size * 0.7, opacity: 0, rotation: 8, scale: 0.6, transformOrigin: '0% 100%' },
+      { y: 0, opacity: 1, rotation: 0, scale: 1, duration: 0.55, ease: 'back.out(2.2)', stagger: st }, t);
+  }
   if (document.querySelector(`#${id} .mk`))
     tl.fromTo(`#${id} .mk`, { scaleX: 0, transformOrigin: '0% 50%' }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, t + 0.2 + n * st);
 }
@@ -139,7 +160,9 @@ function chipV(id, x, y, s, o = {}) {
   const { size = 50, bg = C.teal, fg = '#fff', w = 700, pad = size * 0.8, stroke = '' } = o;
   const h = o.h || size * 1.75;
   return G(id, x, y, `<rect class="chip-bg" data-pad="${pad}" x="-100" y="${-h / 2}" width="200" height="${h}" rx="${h / 2}" fill="${bg}" ${stroke}/>` +
-    T(0, size * 0.36, s, { size, fill: fg, w }));
+    T(0, size * 0.36, s, { size, fill: fg, w: Math.max(w, 800) }) +
+    `<clipPath id="cp-${id}"><rect class="chip-clip" x="-100" y="${-h / 2}" width="200" height="${h}" rx="${h / 2}"/></clipPath>` +
+    `<g clip-path="url(#cp-${id})"><g class="shine" data-w="200">${R(-45, -h / 2 - 10, 90, h + 20, 'url(#shineG)', 0, 'transform="skewX(-22)"')}</g></g>`);
 }
 
 // floating background shapes, drift for the whole scene
@@ -202,6 +225,8 @@ function transition(type, prev, cur, t) {
 
 async function init() {
   await Promise.all(['400', '500', '600', '700', '800'].map(w => document.fonts.load(`${w} 40px Poppins`)));
+  await Promise.all(['500', '600', '700', '800'].map(w => document.fonts.load(`${w} 40px "Plus Jakarta Sans"`)));
+  await Promise.all(['600', '700', '800'].map(w => document.fonts.load(`${w} 40px "Bricolage Grotesque"`)));
   await Promise.all(['600', '700'].map(w => document.fonts.load(`${w} 40px Hind`, '₹')));
   await document.fonts.ready;
 
@@ -218,9 +243,14 @@ async function init() {
   document.querySelectorAll('.chip-bg').forEach(r => {
     const t = r.nextElementSibling, w = t.getComputedTextLength(), pad = +r.dataset.pad;
     r.setAttribute('x', -w / 2 - pad); r.setAttribute('width', w + pad * 2);
+    const g = r.parentNode, cc = g.querySelector('.chip-clip'), sh = g.querySelector('.shine');
+    if (cc) { cc.setAttribute('x', -w / 2 - pad); cc.setAttribute('width', w + pad * 2); }
+    if (sh) { sh.dataset.w = w + pad * 2; sh.setAttribute('transform', `translate(${-(w / 2 + pad) - 160},0)`); }
   });
   layoutKT();
   if (window.afterBuild) window.afterBuild();
+  const srcs = [...new Set([...document.querySelectorAll('image')].map(i => i.getAttribute('href')))];
+  await Promise.all(srcs.map(src => { const im = new Image(); im.src = src; return im.decode(); }));
 
   SCENES.forEach((s, i) => {
     if (i === 0) tl.set('#' + s.id, { opacity: 1 }, 0);

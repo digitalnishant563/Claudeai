@@ -161,39 +161,58 @@ scene('r3', 9.75, 17.35, C.mintL, 'push', () => `
 });
 
 // =====================================================================
-// R4 — born from this need: Jan Seva Dawa Bazaar → a chain (17.35 – 24.75)
+// R4 — born from this need: the real JSDB store comes to life → a chain (17.35 – 24.75)
 // =====================================================================
+const SIGN = { x: 590, y: 362 };   // logo on the store's wall sign, in photo coordinates
 scene('r4', 17.35, 24.75, C.cream, 'iris', () => `
+  <defs><linearGradient id="topFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E9" stop-opacity="0.96"/><stop offset="0.6" stop-color="#FFF6E9" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF6E9" stop-opacity="0"/></linearGradient></defs>
   ${Ci(540, 1050, 560, '#FFEFD6')}
-  ${KT('r4-k0', 540, 330, 'Born from|this need…', { size: 92, fill: C.ink2 })}
+  ${KT('r4-k0', 540, 330, 'Born from|this need…', { size: 96, fill: C.ink2, chars: true })}
   ${G('r4-bulb', 540, 980, S(0, 0, 2.3, icon.bulb()))}
-  ${KT('r4-name', 540, 320, 'Jan Seva|*Dawa Bazaar*', { size: 108, fill: C.teal, hi: C.green })}
-  ${KT('r4-sub', 540, 590, 'came to life', { size: 60, w: 600, fill: C.ink2 })}
-  ${chipV('r4-chain', 540, 620, 'A Retail Pharmacy Chain', { size: 52, bg: C.saf, fg: C.ink })}
-  ${G('r4-link', 0, 0, L('M540,1175 L300,1360', C.teal, 9, 'stroke-dasharray="4 24"') + L('M540,1175 L780,1360', C.teal, 9, 'stroke-dasharray="4 24"') + L('M420,1500 L660,1500', C.teal, 9, 'stroke-dasharray="4 24"'))}
-  ${G('r4-stL', 280, 1580, S(0, 0, 0.5, storeArt()))}
-  ${G('r4-stR', 800, 1580, S(0, 0, 0.5, storeArt()))}
-  ${G('r4-store', 540, 1500, S(0, 0, 1.5, storeArt()))}
-  ${confetti('r4-cf', 540, 1000, 34, 11, 1.3)}
-  ${rings('r4-rg', 540, 1180, C.saf, 3)}
+  <g id="r4-chainset">
+    ${rings('r4-rg2', 540, 820, C.lime, 3)}
+    ${G('r4-link', 0, 0, L('M540,1185 L300,1360', C.tealL, 9, 'stroke-dasharray="4 24"') + L('M540,1185 L780,1360', C.tealL, 9, 'stroke-dasharray="4 24"') + L('M420,1500 L660,1500', C.tealL, 9, 'stroke-dasharray="4 24"'))}
+    ${G('r4-stL', 280, 1590, S(0, 0, 0.5, storeArt()))}
+    ${G('r4-stR', 800, 1590, S(0, 0, 0.5, storeArt()))}
+    ${G('r4-stC', 540, 1175, S(0, 0, 0.5, storeArt()))}
+    ${G('r4-badge', 540, 815, Ci(0, 0, 150, '#fff', 'opacity="0.55"') + logoMark(118))}
+    ${chipV('r4-chain', 540, 600, 'A Retail Pharmacy Chain', { size: 52, bg: C.saf, fg: C.ink })}
+  </g>
+  <g id="r4-photo" opacity="0">
+    <g class="ph">
+      <image href="assets/store_cel.jpg" x="0" y="0" width="1080" height="1920"/>
+      ${G('r4-signlogo', SIGN.x, SIGN.y, `<g class="glow">${Ci(0, 0, 120, 'url(#glowG)')}</g>` + logoMark(54))}
+    </g>
+    ${R(0, 0, 1080, 820, 'url(#topFade)')}
+    ${confetti('r4-cf', 540, 700, 34, 11, 1.3)}
+  </g>
+  ${KT('r4-name', 540, 300, 'Jan Seva|*Dawa Bazaar*', { size: 112, fill: C.tealD, hi: C.green, chars: true })}
+  ${KT('r4-sub', 540, 560, 'came to life', { size: 62, w: 700, fill: C.ink2 })}
 `, t => {
-  words('r4-k0', 17.65);
+  words('r4-k0', 17.65, { cst: 0.025 });
   popIn(I('r4-bulb'), 17.7, { d: 0.6, ease: 'back.out(2.2)' });
   spin('#r4-bulb .rays', 17.7, 19.2, 90);
   tl.to(I('r4-bulb'), { scale: 1.08, duration: 0.25, yoyo: true, repeat: 3, transformOrigin: '50% 50%' }, 18.0);
-  wordsOut('r4-k0', 18.6);
-  tl.to(I('r4-bulb'), { scale: 0.2, y: -120, opacity: 0, duration: 0.4, ease: 'power2.in' }, 18.7);
-  tl.fromTo(I('r4-store'), { y: 900, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'back.out(1.25)' }, 18.84);
-  words('r4-name', 19.0, { st: 0.1 });
-  ripple('r4-rg', 19.4, 900, 1.2);
-  burst('r4-cf', 19.4);
-  punch('r4', 19.45);
-  words('r4-sub', 19.6);
-  tl.to('#r4-store .glow', { scale: 1.5, opacity: 0.2, duration: 0.6, yoyo: true, repeat: 7, transformOrigin: '50% 50%' }, 19.7);
-  wordsOut('r4-sub', 21.4);
-  tl.to(I('r4-store'), { scale: 0.34, y: -330, duration: 0.9, ease: 'power3.inOut', transformOrigin: '50% 100%' }, 21.66);
-  slideIn(I('r4-stL'), 22.15, { x: -500, d: 0.7, ease: 'back.out(1.3)' });
-  slideIn(I('r4-stR'), 22.3, { x: 500, d: 0.7, ease: 'back.out(1.3)' });
+  wordsOut('r4-k0', 18.55);
+  tl.to(I('r4-bulb'), { scale: 4, opacity: 0, duration: 0.35, ease: 'power2.in' }, 18.6);
+  // dive out of the sign: start tight on the logo, pull back to reveal the store
+  fadeIn('#r4-photo', 18.75, 0.25);
+  tl.fromTo('#r4-photo .ph', { scale: 3.6, x: 540 - SIGN.x, y: 960 - SIGN.y, svgOrigin: `${SIGN.x} ${SIGN.y}` },
+    { scale: 1.12, x: 0, y: 0, duration: 1.7, ease: 'power3.inOut' }, 18.75);
+  tl.to('#r4-photo .ph', { scale: 1.2, duration: 1.4, ease: 'none' }, 20.45);
+  tl.fromTo('#r4-signlogo .glow', { scale: 0.6, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1.6, opacity: 1, duration: 0.5, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 19.1);
+  words('r4-name', 19.0, { cst: 0.035 });
+  burst('r4-cf', 19.45);
+  punch('r4', 19.5);
+  words('r4-sub', 19.75);
+  wordsOut('r4-sub', 21.35);
+  tl.to('#r4-photo', { scale: 0.55, opacity: 0, duration: 0.55, ease: 'power3.in', svgOrigin: '540 960' }, 21.3);
+  popIn(I('r4-badge'), 21.66, { ease: 'back.out(2.4)' });
+  ripple('r4-rg2', 21.75, 600, 1.0);
+  spin(I('r4-badge'), 21.66, 24.8, 12);
+  tl.fromTo(I('r4-stC'), { y: 400, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.4)' }, 22.0);
+  slideIn(I('r4-stL'), 22.2, { x: -500, d: 0.7, ease: 'back.out(1.3)' });
+  slideIn(I('r4-stR'), 22.35, { x: 500, d: 0.7, ease: 'back.out(1.3)' });
   fadeIn(I('r4-link'), 22.7, 0.4);
   tl.to('#r4-link path', { attr: { 'stroke-dashoffset': -112 }, duration: 2, ease: 'none' }, 22.7);
   popIn(I('r4-chain'), 23.0, { ease: 'back.out(2.4)' });
@@ -434,46 +453,40 @@ scene('r11', 59.65, 72.0, C.cream, 'swipe', () => {
 });
 
 // =====================================================================
-// R12 — registered pharmacist verifies (72.0 – 76.05)
+// R12 — registered pharmacist verifies (72.0 – 76.05) — the real JSDB counter, drawn
 // =====================================================================
-scene('r12', 72.0, 76.05, '#EAF6F2', 'iris', () => {
-  let wall = '';
-  const cols = [C.coral, C.blue, C.green, C.saf, C.purple, C.tealL, C.orange];
-  [720, 860, 1000].forEach((y, r) => {
-    wall += R(20, y, 1040, 14, C.boxD, 6);
-    for (let k = 0; k < 20; k++) {
-      const h = 56 + ((k * 7 + r * 5) % 4) * 14;
-      wall += R(36 + k * 51, y - h, 40, h, cols[(k + r) % cols.length], 5, 'opacity="0.85"');
-    }
-  });
-  return `
-    ${wall}
-    ${G('r12-ph', 640, 1270, S(0, 0, 1.55, `<g class="bodyBob">${person({ coat: true, style: 'short', shirt: C.tealL, skin: C.skin2, hair: '#1E1E26' })}</g>`))}
-    ${R(-60, 1150, W + 120, 900, C.teal)}${R(-60, 1132, W + 120, 34, C.tealD, 8)}${R(40, 1220, 1000, 8, '#fff', 4, 'opacity="0.15"')}
-    ${G('r12-sign', 660, 1500, R(-300, -110, 600, 220, '#ffffff', 40, 'opacity="0.12"') + S(-190, 0, 1, logoMark(66)) + T(60, -10, 'Jan Seva', { size: 50, w: 800, fill: '#fff' }) + T(60, 52, 'Dawa Bazaar', { size: 50, w: 800, fill: '#fff' }))}
-    ${chipV('r12-badge', 640, 650, 'Registered Pharmacist', { size: 42, bg: C.green, stroke: 'stroke="#fff" stroke-width="6"' })}
-    ${G('r12-cu', 230, 1960, S(0, 0, 1.45, person({ style: 'long', shirt: C.saf, pants: C.ink2, skin: C.skin1, hair: '#3A2A20' })))}
-    ${G('r12-rx', 560, 1080, S(0, 0, 1.35, icon.rx()))}
-    ${G('r12-mag', 560, 1040, icon.magnifier(1.2))}
-    ${G('r12-ok', 570, 1110, `<g transform="rotate(-12)">${R(-180, -50, 360, 100, 'rgba(255,255,255,0.95)', 16, `stroke="${C.green}" stroke-width="8"`)}${T(0, 18, 'VERIFIED ✓', { size: 50, fill: C.green, w: 800 })}</g>`)}
-    ${KT('r12-k', 540, 300, 'Every prescription|*verified*', { size: 80, plate: true })}
-  `;
-}, t => {
+scene('r12', 72.0, 76.05, '#EAF6F2', 'iris', () => `
+  <defs><linearGradient id="botFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B4A42" stop-opacity="0"/><stop offset="1" stop-color="#0B4A42" stop-opacity="0.85"/></linearGradient></defs>
+  <g id="r12-cam">
+    <image href="assets/store_bg.jpg" x="0" y="0" width="1080" height="1920"/>
+    ${G('r12-signlogo', SIGN.x, SIGN.y, `<g class="glow">${Ci(0, 0, 110, 'url(#glowG)')}</g>` + logoMark(54))}
+    <g id="r12-person"><image href="assets/store_person.png" x="338" y="680" width="372" height="623"/></g>
+  </g>
+  ${R(0, 1300, 1080, 620, 'url(#botFade)')}
+  ${G('r12-rx', 330, 1420, S(0, 0, 1.35, icon.rx()))}
+  ${G('r12-mag', 330, 1380, icon.magnifier(1.2))}
+  ${G('r12-ok', 350, 1450, `<g transform="rotate(-12)">${R(-180, -50, 360, 100, 'rgba(255,255,255,0.96)', 16, `stroke="${C.green}" stroke-width="8"`)}${T(0, 18, 'VERIFIED ✓', { size: 50, fill: C.greenD, w: 800 })}</g>`)}
+  ${G('r12-ptr', 640, 790, P('M-22,0 L22,0 L0,34Z', C.green))}
+  ${chipV('r12-badge', 640, 745, 'Registered Pharmacist', { size: 42, bg: C.green, stroke: 'stroke="#fff" stroke-width="6"' })}
+  ${G('r12-lower', 540, 1745, `<g filter="url(#softShadow)">${R(-480, -84, 960, 168, '#fff', 40)}</g>` + R(-480, -84, 18, 168, C.lime, 9) + S(-380, 0, 1, logoMark(62)) +
+    T(-292, -8, 'Jan Seva Dawa Bazaar', { size: 46, w: 800, fill: C.tealD, a: 'start' }) + T(-292, 44, 'Pharmacist-verified, every time', { size: 31, w: 600, fill: C.ink3, a: 'start' }))}
+  ${KT('r12-k', 540, 270, 'Every prescription *verified*', { size: 64, plate: true })}
+`, t => {
+  tl.fromTo('#r12-cam', { scale: 1.3, y: 260, svgOrigin: '540 1000' }, { scale: 1.4, y: 240, duration: 4.6, ease: 'none' }, 71.7);
+  tl.fromTo('#r12-person', { scale: 1, transformOrigin: '50% 100%' }, { scale: 1.035, duration: 4.4, ease: 'sine.inOut' }, 71.8);
+  bob('#r12-person > image', 72.2, 76.0, 3, 1.3);
+  tl.fromTo('#r12-signlogo .glow', { opacity: 0, scale: 0.6, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1.4, duration: 0.6, yoyo: true, repeat: 3 }, 72.4);
   words('r12-k', 72.2);
-  slideIn(I('r12-ph'), 72.05, { y: 200, d: 0.6 });
-  slideIn(I('r12-cu'), 72.1, { x: -400, d: 0.6 });
-  bob('#r12-ph .bodyBob', 72.7, 76.0, 6, 1.1);
-  blink('#r12-ph', 72.2, 76.0, 1.6);
-  blink('#r12-cu', 72.6, 76.0, 1.9);
-  popIn(I('r12-sign'), 72.5, { from: 0.6 });
-  tl.fromTo(I('r12-rx'), { x: -330, y: 420, rotation: -40, opacity: 0, scale: 0.5 }, { x: 0, y: 0, rotation: -6, opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out' }, 72.6);
+  tl.fromTo(I('r12-lower'), { x: -1100 }, { x: 0, duration: 0.6, ease: 'power3.out' }, 72.5);
+  tl.fromTo(I('r12-rx'), { x: -330, y: 420, rotation: -40, opacity: 0, scale: 0.5 }, { x: 0, y: 0, rotation: -6, opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out' }, 72.7);
   tl.fromTo(I('r12-mag'), { opacity: 0, x: -80 }, { opacity: 1, x: -60, duration: 0.3 }, 73.3);
   tl.to(I('r12-mag'), { x: 70, y: 50, duration: 0.45, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 73.6);
   fadeOut(I('r12-mag'), 74.85, 0.2);
   popIn(I('r12-badge'), 73.5, { ease: 'back.out(2.4)' });
+  popIn(I('r12-ptr'), 73.7);
+  bob(I('r12-ptr'), 74.2, 76.0, 8, 0.6);
   popIn(I('r12-ok'), 74.95, { from: 2.3, ease: 'power4.out', d: 0.35 });
   punch('r12', 75.1, 1.05);
-  tl.fromTo('#r12-ph .armL .arm', { rotation: 0, transformOrigin: '50% 5%' }, { rotation: 35, duration: 0.4, yoyo: true, repeat: 1 }, 73.4);
 });
 
 // =====================================================================
@@ -680,63 +693,89 @@ scene('r18', 98.6, 103.85, 'url(#skyV)', 'swipe', () => `
 });
 
 // =====================================================================
-// R19 — soon 100+; easy service at every doorstep (103.85 – 110.45)
+// R19 — 40 → 100+ branches, spreading across India; service at every doorstep (103.85 – 110.45)
 // =====================================================================
-const R19_HOUSES = [[180, 900], [540, 800], [900, 900], [150, 1250], [930, 1250], [190, 1640], [890, 1640], [540, 1760]];
-scene('r19', 103.85, 110.45, '#F4FBF8', 'zoom', () => `
-  <g id="r19-a">
-    ${chipV('r19-soon', 540, 300, 'COMING SOON', { size: 48, bg: C.coral, w: 800 })}
-    ${G('r19-num', 540, 590, T(0, 0, '40+', { size: 240, w: 800, fill: C.teal, id: 'r19-count' }))}
-    ${G('r19-lbl', 540, 700, T(0, 0, 'Branches', { size: 72, w: 800, fill: C.ink }))}
-    ${mapBlock('r19-map', 'r19m', '<g class="pins2"></g>')}
-    ${rings('r19-rg', 540, 560, C.tealL, 3)}
-  </g>
-  <g id="r19-b" opacity="0">
-    ${R(-60, -60, W + 120, H + 120, '#F4FBF8')}
-    ${Ci(540, 1280, 520, '#E1F5EC')}
-    <g class="lines">${R19_HOUSES.map(([x, y]) => L(`M540,1250 L${x},${y - 70}`, C.tealL, 7, 'stroke-dasharray="10 14"')).join('')}</g>
-    ${R19_HOUSES.map(([x, y], i) => G(`r19-h${i}`, x - 100, y, S(0, 0, 0.5, house({ w: 400, h: 330, col: ['#F7C873', '#F59E9E', '#9FD3C7', '#C7B8F5', '#FFD59E', '#A8D8F0', '#F7B7A3', '#B9E3A8'][i], trim: '#D9C3A0', tank: i % 2 === 0 })) +
-      `<g class="ok" opacity="0">${S(100, -205, 0.8, icon.check())}</g>`)).join('')}
-    ${G('r19-st', 540, 1400, S(0, 0, 0.55, storeArt()))}
-    ${KT('r19-k', 540, 300, 'Easy service at|*every doorstep*', { size: 82 })}
-  </g>
+const IN_W = { up: 9, mh: 8, rj: 6, gj: 5, mp: 6, hr: 4, pb: 3, br: 4, wb: 4, ka: 4, tn: 4, tg: 3, ap: 3, or: 2, jh: 2, ct: 2, ut: 2, hp: 1, jk: 1, kl: 2, as: 2, ga: 1 };
+const IN_CITIES = ['mh', 'ka', 'tn', 'wb', 'gj', 'tg', 'rj', 'br', 'mp', 'or'];
+scene('r19', 103.85, 110.45, '#F2FAF5', 'zoom', () => `
+  ${Ci(540, 1220, 640, '#E3F4EA')}
+  ${G('r19-india', 44, 640, S(0, 0, 1.62, `<g class="states">${INDIA.locations.map(l => `<path id="in-${l.id}" d="${l.path}" fill="#CFEBD9" stroke="#fff" stroke-width="1.3"/>`).join('')}</g>
+    <g class="arcs"></g><g class="pins"></g><g class="ncr"></g><g class="homes"></g><g class="dl"></g>`))}
+  ${chipV('r19-soon', 540, 250, 'COMING SOON', { size: 46, bg: C.coral, w: 800 })}
+  ${G('r19-num', 540, 470, T(0, 0, '40+', { size: 210, w: 800, fill: C.teal, id: 'r19-count', cls: 'd' }))}
+  ${G('r19-lbl', 540, 560, T(0, 0, 'Branches', { size: 60, w: 800, fill: C.ink }))}
+  ${chipV('r19-ind', 540, 650, 'Expanding across India', { size: 40, bg: C.teal })}
+  ${KT('r19-k', 540, 300, 'Easy service at|*every doorstep*', { size: 84 })}
 `, t => {
-  [...document.querySelectorAll('#r19-map .pins > g')].forEach(p => tl.set(p.firstElementChild, { opacity: 1 }, 103.6));
-  popIn(I('r19-soon'), 104.1, { ease: 'back.out(2.4)' });
-  [...document.querySelectorAll('#r19-map .pins2 > g')].forEach((p, i) => popIn(p.firstElementChild, 104.9 + i * 0.03, { d: 0.35 }));
-  tl.to(I('r19-num'), { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, 105.9);
-  counter('r19-count', 105.9, 1.2, 40, 100, v => v >= 100 ? '100+' : Math.round(v) + '+');
-  ripple('r19-rg', 107.0, 700, 0.9);
-  punch('r19', 107.05, 1.06);
-  tl.fromTo('#r19-b', { opacity: 0, scale: 1.3, svgOrigin: '540 960' }, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' }, 107.3);
-  popIn(I('r19-st'), 107.45, { from: 0.5, ease: 'back.out(2)' });
-  words('r19-k', 107.51);
-  fadeIn('#r19-b .lines', 107.8, 0.5);
-  tl.fromTo('#r19-b .lines path', { attr: { 'stroke-dashoffset': 0 } }, { attr: { 'stroke-dashoffset': -96 }, duration: 2.6, ease: 'none' }, 107.8);
-  R19_HOUSES.forEach((h, i) => {
-    popIn(I(`r19-h${i}`), 107.6 + i * 0.08, { from: 0.4, ease: 'back.out(2)' });
-    popIn(`#r19-h${i} .ok`, 108.3 + i * 0.18, { ease: 'back.out(3)' });
+  popIn(I('r19-soon'), 104.04, { ease: 'back.out(2.4)' });
+  popIn(I('r19-num'), 103.9, { from: 0.6 });
+  riseIn(I('r19-lbl'), 104.2);
+  popIn(I('r19-ind'), 104.95, { ease: 'back.out(2.4)' });
+  const ncr = [...document.querySelectorAll('#r19-india .ncr > g > g')];
+  ncr.forEach((p, i) => popIn(p, 104.0 + i * 0.05, { d: 0.35 }));
+  popIn('#r19-india .dl > g > g', 104.1, { ease: 'back.out(2.4)' });
+  document.querySelectorAll('#r19-india .dl .rg').forEach((el, i) => {
+    for (let k = 0; k < 4; k++) tl.fromTo(el, { attr: { r: 8 }, opacity: 0.9 }, { attr: { r: 70 }, opacity: 0, duration: 1.2, ease: 'power2.out', immediateRender: false }, 104.3 + k * 1.4 + i * 0.4);
   });
+  // expansion wave: pins in order of distance from Delhi, states light up as they get their first branch
+  const pins = [...document.querySelectorAll('#r19-india .pins > g')];
+  const seen = new Set();
+  pins.forEach((p, i) => {
+    const at = 104.9 + (i / pins.length) * 2.3;
+    popIn(p.firstElementChild, at, { d: 0.35, ease: 'back.out(3)' });
+    if (!seen.has(p.dataset.st)) {
+      seen.add(p.dataset.st);
+      tl.to(`#in-${p.dataset.st}`, { attr: { fill: '#9ED9B1' }, duration: 0.35 }, at);
+    }
+  });
+  tl.to(I('r19-num'), { scale: 1.12, duration: 0.2, yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, 105.9);
+  counter('r19-count', 105.9, 1.2, 40, 100, v => v >= 100 ? '100+' : Math.round(v) + '+');
+  punch('r19', 107.05, 1.06);
+  fadeOut(I('r19-soon'), 107.3, 0.25); fadeOut(I('r19-num'), 107.3, 0.25); fadeOut(I('r19-lbl'), 107.3, 0.25); fadeOut(I('r19-ind'), 107.3, 0.25);
+  words('r19-k', 107.51);
+  document.querySelectorAll('#r19-india .arcs path').forEach((a, i) => {
+    const len = a.getTotalLength();
+    tl.fromTo(a, { attr: { 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len }, opacity: 1 }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.7, ease: 'power2.out' }, 107.65 + i * 0.12);
+  });
+  document.querySelectorAll('#r19-india .homes > g > g').forEach((h, i) => popIn(h, 108.25 + i * 0.12, { ease: 'back.out(3)' }));
 });
 
 // =====================================================================
-// R20 — vision: grow the network step by step (110.45 – 114.5)
+// R20 — vision: fly down the road as new stores stream past (110.45 – 114.5)
 // =====================================================================
-const R20_ST = [[130, 1560, 0.5], [950, 1560, 0.5], [290, 1300, 0.3], [790, 1300, 0.3], [410, 1130, 0.16], [670, 1130, 0.16], [478, 1040, 0.08], [602, 1040, 0.08]];
+const VP = { x: 540, y: 990 };
 scene('r20', 110.45, 114.5, 'url(#sunV)', 'iris', () => `
-  ${G('r20-sun', 540, 980, Ci(0, 0, 270, '#FFE29A', 'opacity="0.5"') + Ci(0, 0, 175, '#FFC857'))}
-  ${R(-60, 980, W + 120, 1000, '#9AD7AE')}
-  ${P('M510,980 L570,980 L960,1980 L120,1980Z', '#6F7D89')}
-  <g id="r20-dash">${Array.from({ length: 10 }, (_, i) => { const f = i / 10, y = 990 + Math.pow(f, 1.6) * 960, h = 8 + f * 70, w = 4 + f * 22; return R(540 - w / 2, y, w, h, '#fff', 3, 'opacity="0.9"'); }).join('')}</g>
-  ${R20_ST.slice().reverse().map(([x, y, s], i) => G(`r20-s${R20_ST.length - 1 - i}`, x, y, S(0, 0, s, storeArt()))).join('')}
-  ${chipV('r20-v', 540, 300, 'OUR VISION', { size: 50, bg: C.saf, fg: C.ink, w: 800 })}
-  ${KT('r20-k', 540, 470, 'Grow the network,|*step by step*', { size: 80 })}
+  ${G('r20-rays', VP.x, VP.y, Array.from({ length: 18 }, (_, i) => `<path d="M0,0 L${(Math.cos((i * 20 - 4) * Math.PI / 180) * 1400).toFixed(0)},${(Math.sin((i * 20 - 4) * Math.PI / 180) * 1400).toFixed(0)} L${(Math.cos((i * 20 + 4) * Math.PI / 180) * 1400).toFixed(0)},${(Math.sin((i * 20 + 4) * Math.PI / 180) * 1400).toFixed(0)}Z" fill="#fff" opacity="0.13"/>`).join(''))}
+  ${G('r20-sun', VP.x, VP.y, Ci(0, 0, 290, '#FFE29A', 'opacity="0.55"') + Ci(0, 0, 180, '#FFC857'))}
+  ${R(-60, VP.y, W + 120, 1000, '#9AD7AE')}${R(-60, VP.y, W + 120, 10, '#86C99B')}
+  ${P(`M${VP.x - 24},${VP.y} L${VP.x + 24},${VP.y} L1000,1990 L80,1990Z`, '#6F7D89')}
+  ${P(`M${VP.x - 24},${VP.y} L${VP.x - 18},${VP.y} L150,1990 L80,1990Z`, '#fff', 'opacity="0.7"')}${P(`M${VP.x + 18},${VP.y} L${VP.x + 24},${VP.y} L1000,1990 L930,1990Z`, '#fff', 'opacity="0.7"')}
+  <g id="r20-dashes">${Array.from({ length: 9 }, (_, i) => G(`r20-d${i}`, VP.x, VP.y, R(-8, -26, 16, 52, '#fff', 6))).join('')}</g>
+  <g id="r20-flow">${Array.from({ length: 22 }, (_, k) => 21 - k).map(i => G(`r20-f${i}`, VP.x, VP.y, S(0, 0, 1, storeArt()))).join('')}</g>
+  <g id="r20-birds">${[[160, 610, 1], [250, 660, 0.7], [880, 560, 0.85]].map(([x, y, k], i) => G(`r20-b${i}`, x, y, S(0, 0, k, `<g class="wing">${L('M-30,0 Q-15,-16 0,0 Q15,-16 30,0', C.ink2, 5)}</g>`))).join('')}</g>
+  ${chipV('r20-v', 540, 290, 'OUR VISION', { size: 50, bg: C.saf, fg: C.ink, w: 800 })}
+  ${KT('r20-k', 540, 455, 'Grow the network,|*step by step*', { size: 84, chars: true })}
+  ${G('r20-logo', 540, 700, Ci(0, 0, 76, '#fff', 'opacity="0.5"') + logoMark(62))}
 `, t => {
-  tl.fromTo(I('r20-sun'), { y: 160 }, { y: 0, duration: 4, ease: 'power1.out' }, 110.45);
+  spin(I('r20-rays'), 110.2, 114.6, 24);
+  tl.fromTo(I('r20-sun'), { y: 140 }, { y: 0, duration: 4, ease: 'power1.out' }, 110.3);
+  for (let i = 0; i < 22; i++) {
+    const t0 = 108.6 + i * 0.27, left = i % 2 === 0;
+    tl.fromTo(I(`r20-f${i}`), { scale: 0.02, opacity: 0, transformOrigin: '50% 100%' }, { scale: 1.6, opacity: 1, duration: 2.0, ease: 'power2.in' }, t0);
+    tl.fromTo(`#r20-f${i}`, { x: VP.x, y: VP.y }, { x: left ? -330 : 1410, y: 2150, duration: 2.0, ease: 'power2.in' }, t0);
+  }
+  for (let i = 0; i < 9; i++) {
+    const t0 = 109.2 + i * 0.6;
+    tl.fromTo(`#r20-d${i}`, { x: VP.x, y: VP.y }, { y: 2000, duration: 1.3, ease: 'power2.in' }, t0);
+    tl.fromTo(I(`r20-d${i}`), { scale: 0.05 }, { scale: 2.2, duration: 1.3, ease: 'power2.in' }, t0);
+  }
+  [0, 1, 2].forEach(i => {
+    tl.fromTo(I(`r20-b${i}`), { x: -300 - i * 80 }, { x: 900 + i * 60, duration: 4.4, ease: 'none' }, 110.2);
+    tl.fromTo(`#r20-b${i} .wing`, { scaleY: 1, transformOrigin: '50% 100%' }, { scaleY: -0.6, duration: 0.22, yoyo: true, repeat: 19, ease: 'sine.inOut' }, 110.2);
+  });
   popIn(I('r20-v'), 110.69, { ease: 'back.out(2.4)' });
-  tl.fromTo('#r20-dash', { y: 0 }, { y: 40, duration: 0.5, repeat: 7, ease: 'none' }, 110.5);
-  words('r20-k', 111.8);
-  R20_ST.forEach((s, i) => popIn(I(`r20-s${i}`), 111.6 + i * 0.28, { from: 0.2, origin: '50% 100%', ease: 'back.out(2)' }));
+  popIn(I('r20-logo'), 110.9, { ease: 'back.out(2.4)' });
+  words('r20-k', 111.75, { cst: 0.03 });
 });
 
 // =====================================================================
@@ -745,39 +784,82 @@ scene('r20', 110.45, 114.5, 'url(#sunV)', 'iris', () => `
 const RVALS = [
   { ic: icon.shield(1.0), h: 'Right medicine', e: 'genuine & pharmacist-checked', at: 114.74, col: C.green },
   { ic: icon.rupee(0.95), h: 'Lower cost', e: 'flat 20% off on MRP', at: 116.02, col: C.saf },
-  { ic: icon.family(0.8), h: 'More families', e: 'across Delhi NCR', at: 117.16, col: C.coral },
+  { ic: icon.family(0.8), h: 'More families', e: 'across Delhi NCR & beyond', at: 117.16, col: C.coral },
 ];
 scene('r21', 114.5, 119.1, C.mintL, 'push', () => `
   ${Ci(1000, 300, 220, C.mint)}${Ci(80, 1750, 260, C.mint)}
-  ${KT('r21-k', 540, 330, 'So that…', { size: 96, fill: C.ink2 })}
-  ${RVALS.map((v, i) => G(`r21-c${i}`, 540, 690 + i * 330, card(900, 270) + R(-450, -135, 28, 270, v.col, 14) + S(-290, 0, 1, v.ic) +
-    T(-150, -2, v.h, { size: 66, w: 800, fill: C.ink, a: 'start' }) + T(-150, 58, v.e, { size: 34, w: 500, fill: C.ink3, a: 'start' }) +
-    `<g class="ok" opacity="0">${S(380, -90, 0.8, icon.check(1, v.col))}</g>`)).join('')}
+  ${KT('r21-k', 540, 330, 'So that…', { size: 104, fill: C.ink2, chars: true })}
+  ${RVALS.map((v, i) => G(`r21-c${i}`, 540, 690 + i * 330, `<g filter="url(#softShadow)">${R(-450, -135, 900, 270, '#fff', 32)}</g>` + R(-450, -135, 28, 270, v.col, 14) +
+    `<g class="ic">${S(-290, 0, 1, v.ic)}</g>` +
+    T(-150, -2, v.h, { size: 66, w: 800, fill: C.ink, a: 'start', cls: 'd' }) + T(-150, 58, v.e, { size: 34, w: 600, fill: C.ink3, a: 'start' }) +
+    `<clipPath id="r21cp${i}"><rect x="-450" y="-135" width="900" height="270" rx="32"/></clipPath><g clip-path="url(#r21cp${i})"><g class="shine" data-w="900">${R(-60, -160, 120, 320, 'url(#shineG)', 0, 'transform="skewX(-22)"')}</g></g>` +
+    `<g class="ok" opacity="0">${S(380, -90, 0.8, icon.check(1, v.col))}</g>`) + confetti(`r21-cf${i}`, 250, 690 + i * 330, 14, 40 + i, 0.6)).join('')}
 `, t => {
-  words('r21-k', 114.6);
+  words('r21-k', 114.6, { cst: 0.04 });
   RVALS.forEach((v, i) => {
-    tl.fromTo(I(`r21-c${i}`), { scale: 0.3, opacity: 0, rotation: i % 2 ? 6 : -6, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, rotation: 0, duration: 0.55, ease: 'back.out(1.8)' }, v.at);
+    tl.fromTo(I(`r21-c${i}`), { scaleY: 0, opacity: 0, transformOrigin: '50% 50%' }, { scaleY: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)' }, v.at);
+    tl.fromTo(`#r21-c${i} .ic`, { rotation: -25, scale: 0.4, transformOrigin: '50% 50%' }, { rotation: 0, scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, v.at + 0.1);
+    shine(document.querySelector(`#r21-c${i} .shine`), v.at + 0.35);
     popIn(`#r21-c${i} .ok`, v.at + 0.4, { ease: 'back.out(3)' });
+    burst(`r21-cf${i}`, v.at + 0.15);
     punch('r21', v.at + 0.1, 1.03);
   });
 });
 
 // =====================================================================
-// R22 — end card (119.1 – end)
+// R22 — outro (119.1 – end)
 // =====================================================================
-scene('r22', 119.1, DUR, 'url(#endG)', 'swipe', () => `
-  ${Ci(160, 320, 260, '#ffffff', 'opacity="0.05"')}${Ci(960, 1650, 320, '#ffffff', 'opacity="0.05"')}
-  ${rings('r22-rg', 540, 720, '#ffffff', 3)}
-  ${G('r22-logo', 540, 720, Ci(0, 0, 180, '#fff', 'opacity="0.12"') + logoMark(135))}
-  ${KT('r22-name', 540, 1040, 'Jan Seva|Dawa Bazaar', { size: 112, fill: '#fff' })}
-  ${G('r22-tag', 540, 1340, R(-450, -56, 900, 112, '#ffffff', 56, 'opacity="0.12"') + T(0, 14, 'Right medicine • Lower cost • Every home', { size: 36, w: 700, fill: C.saf }))}
-  ${G('r22-loc', 540, 1460, T(0, 0, 'Delhi NCR  •  Gurugram', { size: 38, w: 600, fill: C.mint }))}
-`, t => {
-  popIn(I('r22-logo'), 119.25, { d: 0.7, ease: 'back.out(2.2)' });
-  ripple('r22-rg', 119.35, 700, 1.2);
-  words('r22-name', 119.5, { st: 0.1 });
-  popIn(I('r22-tag'), 120.1, { from: 0.6, ease: 'back.out(2)' });
-  riseIn(I('r22-loc'), 120.4);
+scene('r22', 119.1, DUR, 'url(#endR)', 'swipe', () => {
+  const r = rng(77);
+  let leaves = '';
+  for (let i = 0; i < 16; i++) {
+    const x = r() * W, y = 700 + r() * 1300, k = 0.25 + r() * 0.35;
+    leaves += `<g transform="translate(${x.toFixed(0)},${y.toFixed(0)})"><g class="lf" data-dy="${(-500 - r() * 600).toFixed(0)}" data-rot="${((r() - 0.5) * 360).toFixed(0)}"><g opacity="${(0.25 + r() * 0.35).toFixed(2)}">${icon.leaf(k, i % 2 ? C.lime : '#7FD49B')}</g></g></g>`;
+  }
+  let burstLeaves = '';
+  for (let i = 0; i < 18; i++) {
+    const a = (i / 18) * Math.PI * 2, d = 330 + r() * 160;
+    burstLeaves += `<g class="bl" data-dx="${(Math.cos(a) * d).toFixed(0)}" data-dy="${(Math.sin(a) * d).toFixed(0)}">${icon.leaf(0.45, i % 3 ? C.lime : '#fff')}</g>`;
+  }
+  return `
+    ${G('r22-rays', 540, 820, Array.from({ length: 20 }, (_, i) => `<path d="M0,0 L${(Math.cos((i * 18 - 4) * Math.PI / 180) * 1500).toFixed(0)},${(Math.sin((i * 18 - 4) * Math.PI / 180) * 1500).toFixed(0)} L${(Math.cos((i * 18 + 4) * Math.PI / 180) * 1500).toFixed(0)},${(Math.sin((i * 18 + 4) * Math.PI / 180) * 1500).toFixed(0)}Z" fill="#fff" opacity="0.05"/>`).join(''))}
+    <g id="r22-leaves">${leaves}</g>
+    ${G('r22-glow', 540, 820, Ci(0, 0, 360, 'url(#glowG)'))}
+    ${G('r22-ringB', 540, 820, `<circle r="300" fill="none" stroke="#fff" stroke-opacity="0.35" stroke-width="5" stroke-dasharray="4 18" stroke-linecap="round"/>`)}
+    ${G('r22-ringA', 540, 820, `<circle class="ra" r="262" fill="none" stroke="${C.lime}" stroke-width="12" stroke-linecap="round" transform="rotate(-90)"/>`)}
+    <g id="r22-burst" transform="translate(540,820)">${burstLeaves}</g>
+    ${G('r22-logo', 540, 820, `<clipPath id="r22clip"><circle r="210"/></clipPath>` + logoMark(210) +
+      `<g clip-path="url(#r22clip)"><g class="shine" data-w="420">${R(-70, -260, 140, 520, 'url(#shineG)', 0, 'transform="skewX(-22)"')}</g></g>`)}
+    ${KT('r22-name', 540, 1190, 'Jan Seva|Dawa Bazaar', { size: 108, fill: '#fff', sticker: false, chars: true })}
+    ${chipV('r22-t0', 225, 1440, 'Right medicine', { size: 31, bg: 'rgba(255,255,255,0.14)', fg: '#fff' })}
+    ${chipV('r22-t1', 540, 1440, 'Lower cost', { size: 31, bg: 'rgba(255,255,255,0.14)', fg: '#fff' })}
+    ${chipV('r22-t2', 855, 1440, 'Every home', { size: 31, bg: 'rgba(255,255,255,0.14)', fg: '#fff' })}
+    ${G('r22-loc', 540, 1550, T(0, 0, 'Delhi NCR  •  Gurugram  •  Growing across India', { size: 30, w: 600, fill: C.mint }))}
+    ${chipV('r22-cta', 540, 1680, 'Visit your nearest JSDB store', { size: 42, bg: C.lime, fg: C.tealD, w: 800 })}
+  `;
+}, t => {
+  spin(I('r22-rays'), 119.1, DUR, 40);
+  document.querySelectorAll('#r22-leaves .lf').forEach(l => tl.fromTo(l, { y: 0, rotation: 0 }, { y: +l.dataset.dy, rotation: +l.dataset.rot, duration: DUR - 119.0, ease: 'none', transformOrigin: '50% 50%' }, 119.0));
+  const ra = document.querySelector('#r22-ringA .ra'), len = 2 * Math.PI * 262;
+  tl.fromTo(ra, { attr: { 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len } }, { attr: { 'stroke-dashoffset': 0 }, duration: 1.0, ease: 'power2.inOut' }, 119.25);
+  popIn(I('r22-ringB'), 119.3, { from: 0.6 });
+  spin(I('r22-ringB'), 119.3, DUR, 90);
+  tl.fromTo(I('r22-glow'), { scale: 0.3, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }, 119.4);
+  tl.to(I('r22-glow'), { scale: 1.12, duration: 0.9, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: '50% 50%' }, 120.2);
+  tl.fromTo(I('r22-logo'), { scale: 0, rotation: -220, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, rotation: 0, opacity: 1, duration: 1.1, ease: 'elastic.out(1, 0.6)' }, 119.35);
+  document.querySelectorAll('#r22-burst .bl').forEach((el, i) => {
+    tl.fromTo(el, { x: 0, y: 0, scale: 0.2, opacity: 0, rotation: 0 }, { x: +el.dataset.dx, y: +el.dataset.dy, scale: 1, opacity: 1, rotation: 160 + i * 20, duration: 0.9, ease: 'power3.out' }, 119.6);
+    tl.to(el, { opacity: 0, scale: 0.6, duration: 0.5 }, 120.3);
+  });
+  punch('r22', 119.65, 1.06);
+  shine(document.querySelector('#r22-logo .shine'), 120.3);
+  shine(document.querySelector('#r22-logo .shine'), 122.6);
+  bob(I('r22-logo'), 120.6, DUR, 8, 1.6);
+  words('r22-name', 120.0, { cst: 0.035 });
+  ['r22-t0', 'r22-t1', 'r22-t2'].forEach((id, i) => popIn(I(id), 121.0 + i * 0.22, { ease: 'back.out(2.4)' }));
+  riseIn(I('r22-loc'), 121.8);
+  popIn(I('r22-cta'), 122.3, { ease: 'back.out(2.2)' });
+  tl.to(I('r22-cta'), { scale: 1.05, duration: 0.45, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: '50% 50%' }, 123.0);
 }, ['#ffffff']);
 
 // pins + network, after the DOM exists
@@ -787,13 +869,44 @@ window.afterBuild = () => {
     const q = p6.slice(0, i + 1).reduce((b, c) => Math.hypot(c[0] - p[0], c[1] - p[1]) < Math.hypot(b[0] - p[0], b[1] - p[1]) ? c : b);
     return L(`M${q[0].toFixed(0)},${(q[1] - 34).toFixed(0)} L${p[0].toFixed(0)},${(p[1] - 34).toFixed(0)}`, C.teal, 4, 'stroke-dasharray="8 12" opacity="0.7"');
   }).join('');
-  const all = ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad', 'delhi', 'gurugram'];
-  addPins('#r17-map .pins', all, 42, 9, 0.75, C.coral);
-  addPins('#r19-map .pins', all, 42, 9, 0.75, C.coral);
-  addPins('#r19-map .pins2', all, 60, 13, 0.55, C.green);
+  addPins('#r17-map .pins', ['delhi', 'gurugram', 'noida', 'ghaziabad', 'faridabad', 'delhi', 'gurugram'], 42, 9, 0.75, C.coral);
+
+  // India: Delhi hub, NCR cluster, expansion pins ordered by distance from Delhi
+  const host = document.querySelector('#r19-india');
+  const dl = document.getElementById('in-dl').getBBox(), D = [dl.x + dl.width / 2, dl.y + dl.height / 2];
+  const r = rng(101), pin = (x, y, s, col) => `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g opacity="0">${icon.pin(s, col)}</g></g>`;
+  const inside = (id, x, y) => document.getElementById('in-' + id).isPointInFill(new DOMPoint(x, y));
+  let ncr = '';
+  for (let i = 0, g = 0; i < 9 && g < 5000; g++) {
+    const x = D[0] + (r() - 0.5) * 30, y = D[1] + (r() - 0.5) * 24;
+    if (['dl', 'hr', 'up'].some(s => inside(s, x, y))) { ncr += pin(x, y, 0.22, C.coral); i++; }
+  }
+  host.querySelector('.ncr').innerHTML = ncr;
+  host.querySelector('.dl').innerHTML = `<g transform="translate(${D[0]},${D[1]})">${[0, 1].map(() => `<circle class="rg" r="8" fill="none" stroke="${C.coral}" stroke-width="2.5" opacity="0"/>`).join('')}<g opacity="0">${Ci(0, 0, 7, C.coral)}${Ci(0, 0, 3, '#fff')}</g></g>`;
+  const pts = [];
+  Object.entries(IN_W).forEach(([st, n]) => {
+    const b = document.getElementById('in-' + st).getBBox();
+    for (let k = 0, g = 0; k < n && g < 4000; g++) {
+      const x = b.x + r() * b.width, y = b.y + r() * b.height;
+      if (!inside(st, x, y) || pts.some(p => Math.hypot(p.x - x, p.y - y) < 13)) continue;
+      pts.push({ x, y, st, d: Math.hypot(x - D[0], y - D[1]) }); k++;
+    }
+  });
+  pts.sort((a, b) => a.d - b.d);
+  host.querySelector('.pins').innerHTML = pts.map(p => pin(p.x, p.y, 0.26, C.green).replace('<g transform', `<g data-st="${p.st}" transform`)).join('');
+  const cities = IN_CITIES.map(st => {
+    const b = document.getElementById('in-' + st).getBBox(), c = [b.x + b.width / 2, b.y + b.height / 2];
+    return pts.filter(p => p.st === st).reduce((best, p) => Math.hypot(p.x - c[0], p.y - c[1]) < Math.hypot(best.x - c[0], best.y - c[1]) ? p : best);
+  });
+  host.querySelector('.arcs').innerHTML = cities.map(c => {
+    const mx = (D[0] + c.x) / 2, my = (D[1] + c.y) / 2 - Math.hypot(c.x - D[0], c.y - D[1]) * 0.25;
+    return `<path d="M${D[0].toFixed(1)},${D[1].toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${c.x.toFixed(1)},${c.y.toFixed(1)}" fill="none" stroke="${C.tealL}" stroke-width="2.4" stroke-linecap="round" opacity="0"/>`;
+  }).join('');
+  host.querySelector('.homes').innerHTML = cities.map(c => `<g transform="translate(${c.x.toFixed(1)},${(c.y - 16).toFixed(1)})"><g opacity="0">${S(0, 0, 0.11, house({ w: 160, h: 150, col: '#FFFFFF', trim: C.lime, door: true }))}${S(14, -16, 0.2, icon.check())}</g></g>`).join('');
 };
 
 // per-scene ambient particle colours
-const FX = { r1: FX_W, r2: FX_S, r3: FX_T, r4: FX_S, r5: FX_B, r6: FX_T, r7: FX_W, r8: FX_B, r9: FX_B, r10: FX_C, r11: FX_S, r12: FX_T, r13: FX_P, r14: FX_B, r15: FX_S, r16: FX_C, r17: FX_T, r18: FX_W, r19: FX_T, r20: FX_S, r21: FX_T };
+const FX = { r1: FX_W, r2: FX_S, r3: FX_T, r4: FX_S, r5: FX_B, r6: FX_T, r7: FX_W, r8: FX_B, r9: FX_B, r10: FX_C, r11: FX_S, r12: FX_W, r13: FX_P, r14: FX_B, r15: FX_S, r16: FX_C, r17: FX_T, r18: FX_W, r19: FX_T, r20: FX_S, r21: FX_T };
 SCENES.forEach(s => { if (FX[s.id]) s.fxCols = FX[s.id]; });
+window.WARM = [19.5, 74.0];
 init();

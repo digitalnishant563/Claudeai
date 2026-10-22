@@ -26,6 +26,8 @@ async function openPage() {
   try { await page.waitForFunction(() => window.ready === true, null, { timeout: 60000 }); }
   catch (e) { console.error('page not ready', errs); throw e; }
   if (errs.length) console.error('page errors:', errs);
+  // decode every image layer once so no frame catches an image mid-decode
+  for (const t of await page.evaluate(() => window.WARM || [])) { await page.evaluate(t => window.seek(t), t); await page.screenshot({ type: 'jpeg', quality: 50 }); }
   return page;
 }
 
