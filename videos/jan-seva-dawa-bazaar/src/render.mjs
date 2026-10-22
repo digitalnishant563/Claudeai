@@ -13,14 +13,16 @@ const server = http.createServer((req, res) => {
 }).listen(0);
 const port = server.address().port;
 const FPS = 30;
+const PAGE = process.env.PAGE || 'index.html';
+const [VW, VH] = (process.env.SIZE || '1920x1080').split('x').map(Number);
 
 const browser = await chromium.launch();
 async function openPage() {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+  const page = await browser.newPage({ viewport: { width: VW, height: VH } });
   const errs = [];
   page.on('pageerror', e => errs.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
-  await page.goto(`http://127.0.0.1:${port}/index.html`);
+  await page.goto(`http://127.0.0.1:${port}/${PAGE}`);
   try { await page.waitForFunction(() => window.ready === true, null, { timeout: 60000 }); }
   catch (e) { console.error('page not ready', errs); throw e; }
   if (errs.length) console.error('page errors:', errs);

@@ -214,9 +214,9 @@ scene('s4', 17.35, 24.75, C.cream, () => `
   ${H('s4-sub', 'की शुरुआत हुई', 232, { size: 46, w: 600, fill: C.ink2 })}
   ${chip('s4-chain', 960, 262, 'एक Retail Pharmacy Chain', { size: 46, bg: C.saf, fg: C.ink, w: 700 })}
   ${G('s4-link', 0, 0, L('M610,880 L790,880', C.teal, 8, 'stroke-dasharray="4 22"') + L('M1130,880 L1310,880', C.teal, 8, 'stroke-dasharray="4 22"'))}
-  ${G('s4-stL', 430, 960, S(0, 0, 0.62, storeArt()))}
-  ${G('s4-stR', 1490, 960, S(0, 0, 0.62, storeArt()))}
-  ${G('s4-store', 960, 960, storeArt())}
+  ${G('s4-stL', 430, 960, S(0, 0, 0.62, storeArt({ name: 'जन सेवा दवा बाज़ार' })))}
+  ${G('s4-stR', 1490, 960, S(0, 0, 0.62, storeArt({ name: 'जन सेवा दवा बाज़ार' })))}
+  ${G('s4-store', 960, 960, storeArt({ name: 'जन सेवा दवा बाज़ार' }))}
   ${confetti('s4-cf', 960, 600, 26, 11)}
 `, t => {
   riseIn(I('s4-h0'), 17.65);
@@ -566,7 +566,7 @@ const NODES = [
   { n: 'Super Stockist', col: C.purple, art: S(0, 40, 0.75, boxArt(80, 70) + S(0, -70, 1, boxArt(64, 56))) },
   { n: 'Distributor', col: C.safD, art: S(0, 38, 0.3, truckArt()) },
   { n: 'Wholesaler', col: C.orange, art: S(0, 50, 0.24, warehouseArt()) },
-  { n: 'Retailer', col: C.coral, art: S(0, 48, 0.2, storeArt()) },
+  { n: 'Retailer', col: C.coral, art: S(0, 48, 0.2, storeArt({ name: 'जन सेवा दवा बाज़ार' })) },
   { n: 'You', col: C.green, art: icon.family(0.5) },
 ];
 scene('s15', 84.2, 92.25, '#FFF9F0', () => {
@@ -665,7 +665,7 @@ scene('s17', 95.2, 98.6, '#F4FBF8', () => `
 scene('s18', 98.6, 103.85, 'url(#skyG)', () => `
   ${G('s18-c1', 520, 200, cloud(0.7, 0.9))}${G('s18-c2', 1300, 150, cloud(0.55, 0.85))}
   ${R(0, 820, 1920, 260, '#9AD7AE')}${R(0, 880, 1920, 110, '#6F7D89')}${Array.from({ length: 11 }, (_, i) => R(i * 190 + 30, 930, 100, 10, '#fff', 5, 'opacity="0.8"')).join('')}
-  ${G('s18-store', 300, 880, S(0, 0, 0.6, storeArt()))}
+  ${G('s18-store', 300, 880, S(0, 0, 0.6, storeArt({ name: 'जन सेवा दवा बाज़ार' })))}
   ${G('s18-house', 1380, 880, house({ w: 420, h: 440, col: '#F7C873', trim: '#E0A94A', tank: true, plant: true }))}
   ${G('s18-old', 1690, 910, S(0, 0, 0.78, person({ style: 'grey', glasses: true, stick: true, shirt: '#8E7CC3', pants: C.ink2, skin: C.skin2, mouth: 'smile' })))}
   ${G('s18-phone', 1810, 420, icon.phone(0.95) + `<g class="ok" opacity="0">${S(48, -86, 0.8, icon.check())}</g>`)}
@@ -708,7 +708,7 @@ scene('s19', 103.85, 110.45, '#F4FBF8', () => `
     <g class="lines">${S19_HOUSES.map(([x, y]) => L(`M960,700 L${x},${y - 60}`, C.tealL, 6, 'stroke-dasharray="10 14"')).join('')}</g>
     ${S19_HOUSES.map(([x, y], i) => G(`s19-h${i}`, x - 100, y, S(0, 0, 0.5, house({ w: 400, h: 330, col: ['#F7C873', '#F59E9E', '#9FD3C7', '#C7B8F5', '#FFD59E', '#A8D8F0', '#F7B7A3', '#B9E3A8'][i], trim: '#D9C3A0', tank: i % 2 === 0 })) +
       `<g class="ok" opacity="0">${S(100, -200, 0.75, icon.check())}</g>`)).join('')}
-    ${G('s19-st', 960, 860, S(0, 0, 0.52, storeArt()))}
+    ${G('s19-st', 960, 860, S(0, 0, 0.52, storeArt({ name: 'जन सेवा दवा बाज़ार' })))}
     ${H('s19-h', 'Service — हर घर तक आसान', 130, { size: 60 })}
   </g>
 `, t => {
@@ -739,7 +739,7 @@ scene('s20', 110.45, 114.5, 'url(#sunG)', () => `
   ${R(0, 560, 1920, 520, '#9AD7AE')}
   ${P('M930,560 L990,560 L1440,1080 L480,1080Z', '#6F7D89')}
   <g id="s20-dash">${Array.from({ length: 9 }, (_, i) => { const f = i / 9, y = 570 + Math.pow(f, 1.6) * 520, h = 8 + f * 50, w = 4 + f * 18; return R(960 - w / 2, y, w, h, '#fff', 3, 'opacity="0.9"'); }).join('')}</g>
-  ${S20_ST.slice().reverse().map(([x, y, s], i) => G(`s20-s${S20_ST.length - 1 - i}`, x, y, S(0, 0, s, storeArt()))).join('')}
+  ${S20_ST.slice().reverse().map(([x, y, s], i) => G(`s20-s${S20_ST.length - 1 - i}`, x, y, S(0, 0, s, storeArt({ name: 'जन सेवा दवा बाज़ार' })))).join('')}
   ${chip('s20-v', 960, 120, 'Vision', { size: 50, bg: C.saf, fg: C.ink, w: 800 })}
   ${H('s20-h', 'Network को धीरे-धीरे आगे बढ़ाना', 225, { size: 56 })}
 `, t => {

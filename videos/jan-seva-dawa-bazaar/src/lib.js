@@ -101,7 +101,7 @@ function person(o = {}) {
       ${Ci(-41, -280, 9, skin)}${Ci(41, -280, 9, skin)}
       ${Ci(0, -282, 42, skin)}
       ${front}${helm}
-      ${Ci(-14, -284, 4.5, C.ink)}${Ci(14, -284, 4.5, C.ink)}
+      <g class="eyes">${Ci(-14, -284, 4.5, C.ink)}${Ci(14, -284, 4.5, C.ink)}</g>
       ${Ci(-25, -269, 6, C.coral, 'opacity="0.3"')}${Ci(25, -269, 6, C.coral, 'opacity="0.3"')}
       ${brows}${glass}${mustache}${mouths[mouth] || mouths.smile}
     </g>
@@ -132,7 +132,7 @@ function storeArt(o = {}) {
     ${R(-hw - 16, -H - 20, W + 32, 32, C.tealD, 10)}
     <g class="sign">${R(-hw + 18, -H + 14, W - 36, 98, C.teal, 16)}
       ${S(-hw + 80, -H + 63, 1, logoMark(34))}
-      ${T(36, -H + 80, 'जन सेवा दवा बाज़ार', { size: o.signSize || 46, fill: '#fff', w: 700 })}
+      ${T(o.name ? 36 : 48, -H + (o.name ? 80 : 76), o.name || 'Jan Seva Dawa Bazaar', { size: o.signSize || (o.name ? 46 : 34), fill: '#fff', w: 700 })}
     </g>
     ${awn}
     <g class="window">${R(-262, -250, 324, 236, '#DFF1FA', 8)}${R(-262, -250, 324, 236, 'none', 8, `stroke="${C.tealD}" stroke-width="10"`)}${goods}
