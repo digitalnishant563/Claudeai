@@ -161,62 +161,52 @@ scene('r3', 9.75, 17.35, C.mintL, 'push', () => `
 });
 
 // =====================================================================
-// R4 — born from this need: the real JSDB store comes to life → a chain (17.35 – 24.75)
+// R4 — born from this need: Jan Seva Dawa Bazaar → a chain (17.35 – 24.75)
 // =====================================================================
-const SIGN = { x: 590, y: 362 };   // logo on the store's wall sign, in photo coordinates
 scene('r4', 17.35, 24.75, C.cream, 'iris', () => `
-  <defs><linearGradient id="topFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E9" stop-opacity="0.96"/><stop offset="0.6" stop-color="#FFF6E9" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF6E9" stop-opacity="0"/></linearGradient></defs>
   ${Ci(540, 1050, 560, '#FFEFD6')}
   ${KT('r4-k0', 540, 330, 'Born from|this need…', { size: 96, fill: C.ink2, chars: true })}
   ${G('r4-bulb', 540, 980, S(0, 0, 2.3, icon.bulb()))}
-  <g id="r4-chainset">
-    ${rings('r4-rg2', 540, 820, C.lime, 3)}
-    ${G('r4-link', 0, 0, L('M540,1185 L300,1360', C.tealL, 9, 'stroke-dasharray="4 24"') + L('M540,1185 L780,1360', C.tealL, 9, 'stroke-dasharray="4 24"') + L('M420,1500 L660,1500', C.tealL, 9, 'stroke-dasharray="4 24"'))}
-    ${G('r4-stL', 280, 1590, S(0, 0, 0.5, storeArt()))}
-    ${G('r4-stR', 800, 1590, S(0, 0, 0.5, storeArt()))}
-    ${G('r4-stC', 540, 1175, S(0, 0, 0.5, storeArt()))}
-    ${G('r4-badge', 540, 815, Ci(0, 0, 150, '#fff', 'opacity="0.55"') + logoMark(118))}
-    ${chipV('r4-chain', 540, 600, 'A Retail Pharmacy Chain', { size: 52, bg: C.saf, fg: C.ink })}
-  </g>
-  <g id="r4-photo" opacity="0">
-    <g class="ph">
-      <image href="assets/store_cel.jpg" x="0" y="0" width="1080" height="1920"/>
-      ${G('r4-signlogo', SIGN.x, SIGN.y, `<g class="glow">${Ci(0, 0, 120, 'url(#glowG)')}</g>` + logoMark(54))}
-    </g>
-    ${R(0, 0, 1080, 820, 'url(#topFade)')}
-    ${confetti('r4-cf', 540, 700, 34, 11, 1.3)}
-  </g>
+  ${rings('r4-rg', 540, 1180, C.saf, 3)}
+  ${rings('r4-rg2', 540, 790, C.lime, 3)}
+  ${G('r4-link', 0, 0, L('M540,1215 L300,1390', C.tealL, 10, 'stroke-dasharray="4 26"') + L('M540,1215 L780,1390', C.tealL, 10, 'stroke-dasharray="4 26"') + L('M450,1560 L630,1560', C.tealL, 10, 'stroke-dasharray="4 26"'))}
+  ${G('r4-stL', 272, 1650, S(0, 0, 0.6, storeArt({ short: true })))}
+  ${G('r4-stR', 808, 1650, S(0, 0, 0.6, storeArt({ short: true })))}
+  ${G('r4-store', 540, 1500, S(0, 0, 1.5, storeArt()))}
+  ${G('r4-badge', 540, 790, Ci(0, 0, 146, '#fff', 'opacity="0.6"') + logoMark(116))}
   ${KT('r4-name', 540, 300, 'Jan Seva|*Dawa Bazaar*', { size: 112, fill: C.tealD, hi: C.green, chars: true })}
   ${KT('r4-sub', 540, 560, 'came to life', { size: 62, w: 700, fill: C.ink2 })}
+  ${chipV('r4-chain', 540, 595, 'A Retail Pharmacy Chain', { size: 52, bg: C.saf, fg: C.ink })}
+  ${confetti('r4-cf', 540, 1000, 34, 11, 1.3)}
 `, t => {
   words('r4-k0', 17.65, { cst: 0.025 });
   popIn(I('r4-bulb'), 17.7, { d: 0.6, ease: 'back.out(2.2)' });
   spin('#r4-bulb .rays', 17.7, 19.2, 90);
   tl.to(I('r4-bulb'), { scale: 1.08, duration: 0.25, yoyo: true, repeat: 3, transformOrigin: '50% 50%' }, 18.0);
   wordsOut('r4-k0', 18.55);
-  tl.to(I('r4-bulb'), { scale: 4, opacity: 0, duration: 0.35, ease: 'power2.in' }, 18.6);
-  // dive out of the sign: start tight on the logo, pull back to reveal the store
-  fadeIn('#r4-photo', 18.75, 0.25);
-  tl.fromTo('#r4-photo .ph', { scale: 3.6, x: 540 - SIGN.x, y: 960 - SIGN.y, svgOrigin: `${SIGN.x} ${SIGN.y}` },
-    { scale: 1.12, x: 0, y: 0, duration: 1.7, ease: 'power3.inOut' }, 18.75);
-  tl.to('#r4-photo .ph', { scale: 1.2, duration: 1.4, ease: 'none' }, 20.45);
-  tl.fromTo('#r4-signlogo .glow', { scale: 0.6, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1.6, opacity: 1, duration: 0.5, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 19.1);
+  tl.to(I('r4-bulb'), { scale: 0.2, y: -120, opacity: 0, duration: 0.4, ease: 'power2.in' }, 18.65);
+  tl.fromTo(I('r4-store'), { y: 900, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'back.out(1.25)' }, 18.84);
   words('r4-name', 19.0, { cst: 0.035 });
-  burst('r4-cf', 19.45);
-  punch('r4', 19.5);
+  ripple('r4-rg', 19.4, 900, 1.2);
+  burst('r4-cf', 19.4);
+  punch('r4', 19.45);
   words('r4-sub', 19.75);
+  tl.to('#r4-store .glow', { scale: 1.5, opacity: 0.2, duration: 0.6, yoyo: true, repeat: 7, transformOrigin: '50% 50%' }, 19.7);
   wordsOut('r4-sub', 21.35);
-  tl.to('#r4-photo', { scale: 0.55, opacity: 0, duration: 0.55, ease: 'power3.in', svgOrigin: '540 960' }, 21.3);
-  popIn(I('r4-badge'), 21.66, { ease: 'back.out(2.4)' });
-  ripple('r4-rg2', 21.75, 600, 1.0);
-  spin(I('r4-badge'), 21.66, 24.8, 12);
-  tl.fromTo(I('r4-stC'), { y: 400, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.4)' }, 22.0);
+  // shrink into the chain; the sign swaps to the bold JSDB board so it stays readable at small size
+  tl.to(I('r4-store'), { scale: 0.4, y: -290, duration: 0.9, ease: 'power3.inOut', transformOrigin: '50% 100%' }, 21.66);
+  tl.to('#r4-store .signFull', { opacity: 0, duration: 0.3 }, 21.95);
+  tl.fromTo('#r4-store .signShort', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 21.95);
+  popIn(I('r4-badge'), 22.0, { ease: 'back.out(2.4)' });
+  ripple('r4-rg2', 22.1, 600, 1.0);
+  spin(I('r4-badge'), 22.0, 24.8, 10);
   slideIn(I('r4-stL'), 22.2, { x: -500, d: 0.7, ease: 'back.out(1.3)' });
   slideIn(I('r4-stR'), 22.35, { x: 500, d: 0.7, ease: 'back.out(1.3)' });
   fadeIn(I('r4-link'), 22.7, 0.4);
-  tl.to('#r4-link path', { attr: { 'stroke-dashoffset': -112 }, duration: 2, ease: 'none' }, 22.7);
+  tl.to('#r4-link path', { attr: { 'stroke-dashoffset': -120 }, duration: 2, ease: 'none' }, 22.7);
   popIn(I('r4-chain'), 23.0, { ease: 'back.out(2.4)' });
 });
+
 
 // =====================================================================
 // R5 — prescription medicines + healthcare products → retail distribution (24.75 – 29.55)
@@ -453,40 +443,46 @@ scene('r11', 59.65, 72.0, C.cream, 'swipe', () => {
 });
 
 // =====================================================================
-// R12 — registered pharmacist verifies (72.0 – 76.05) — the real JSDB counter, drawn
+// R12 — registered pharmacist verifies (72.0 – 76.05)
 // =====================================================================
-scene('r12', 72.0, 76.05, '#EAF6F2', 'iris', () => `
-  <defs><linearGradient id="botFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B4A42" stop-opacity="0"/><stop offset="1" stop-color="#0B4A42" stop-opacity="0.85"/></linearGradient></defs>
-  <g id="r12-cam">
-    <image href="assets/store_bg.jpg" x="0" y="0" width="1080" height="1920"/>
-    ${G('r12-signlogo', SIGN.x, SIGN.y, `<g class="glow">${Ci(0, 0, 110, 'url(#glowG)')}</g>` + logoMark(54))}
-    <g id="r12-person"><image href="assets/store_person.png" x="338" y="680" width="372" height="623"/></g>
-  </g>
-  ${R(0, 1300, 1080, 620, 'url(#botFade)')}
-  ${G('r12-rx', 330, 1420, S(0, 0, 1.35, icon.rx()))}
-  ${G('r12-mag', 330, 1380, icon.magnifier(1.2))}
-  ${G('r12-ok', 350, 1450, `<g transform="rotate(-12)">${R(-180, -50, 360, 100, 'rgba(255,255,255,0.96)', 16, `stroke="${C.green}" stroke-width="8"`)}${T(0, 18, 'VERIFIED ✓', { size: 50, fill: C.greenD, w: 800 })}</g>`)}
-  ${G('r12-ptr', 640, 790, P('M-22,0 L22,0 L0,34Z', C.green))}
-  ${chipV('r12-badge', 640, 745, 'Registered Pharmacist', { size: 42, bg: C.green, stroke: 'stroke="#fff" stroke-width="6"' })}
-  ${G('r12-lower', 540, 1745, `<g filter="url(#softShadow)">${R(-480, -84, 960, 168, '#fff', 40)}</g>` + R(-480, -84, 18, 168, C.lime, 9) + S(-380, 0, 1, logoMark(62)) +
-    T(-292, -8, 'Jan Seva Dawa Bazaar', { size: 46, w: 800, fill: C.tealD, a: 'start' }) + T(-292, 44, 'Pharmacist-verified, every time', { size: 31, w: 600, fill: C.ink3, a: 'start' }))}
-  ${KT('r12-k', 540, 270, 'Every prescription *verified*', { size: 64, plate: true })}
-`, t => {
-  tl.fromTo('#r12-cam', { scale: 1.3, y: 260, svgOrigin: '540 1000' }, { scale: 1.4, y: 240, duration: 4.6, ease: 'none' }, 71.7);
-  tl.fromTo('#r12-person', { scale: 1, transformOrigin: '50% 100%' }, { scale: 1.035, duration: 4.4, ease: 'sine.inOut' }, 71.8);
-  bob('#r12-person > image', 72.2, 76.0, 3, 1.3);
-  tl.fromTo('#r12-signlogo .glow', { opacity: 0, scale: 0.6, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1.4, duration: 0.6, yoyo: true, repeat: 3 }, 72.4);
+scene('r12', 72.0, 76.05, '#EAF6F2', 'iris', () => {
+  let wall = '';
+  const cols = [C.coral, C.blue, C.green, C.saf, C.purple, C.tealL, C.orange];
+  [720, 860, 1000].forEach((y, r) => {
+    wall += R(20, y, 1040, 14, C.boxD, 6);
+    for (let k = 0; k < 20; k++) {
+      const h = 56 + ((k * 7 + r * 5) % 4) * 14;
+      wall += R(36 + k * 51, y - h, 40, h, cols[(k + r) % cols.length], 5, 'opacity="0.85"');
+    }
+  });
+  return `
+    ${wall}
+    ${G('r12-ph', 640, 1270, S(0, 0, 1.55, `<g class="bodyBob">${person({ coat: true, style: 'short', shirt: C.tealL, skin: C.skin2, hair: '#1E1E26' })}</g>`))}
+    ${R(-60, 1150, W + 120, 900, C.teal)}${R(-60, 1132, W + 120, 34, C.tealD, 8)}${R(40, 1220, 1000, 8, '#fff', 4, 'opacity="0.15"')}
+    ${G('r12-sign', 660, 1500, R(-300, -110, 600, 220, '#ffffff', 40, 'opacity="0.12"') + S(-190, 0, 1, logoMark(66)) + T(60, -10, 'Jan Seva', { size: 50, w: 800, fill: '#fff' }) + T(60, 52, 'Dawa Bazaar', { size: 50, w: 800, fill: '#fff' }))}
+    ${chipV('r12-badge', 640, 650, 'Registered Pharmacist', { size: 42, bg: C.green, stroke: 'stroke="#fff" stroke-width="6"' })}
+    ${G('r12-cu', 230, 1960, S(0, 0, 1.45, person({ style: 'long', shirt: C.saf, pants: C.ink2, skin: C.skin1, hair: '#3A2A20' })))}
+    ${G('r12-rx', 560, 1080, S(0, 0, 1.35, icon.rx()))}
+    ${G('r12-mag', 560, 1040, icon.magnifier(1.2))}
+    ${G('r12-ok', 570, 1110, `<g transform="rotate(-12)">${R(-180, -50, 360, 100, 'rgba(255,255,255,0.95)', 16, `stroke="${C.green}" stroke-width="8"`)}${T(0, 18, 'VERIFIED ✓', { size: 50, fill: C.green, w: 800 })}</g>`)}
+    ${KT('r12-k', 540, 300, 'Every prescription|*verified*', { size: 84, plate: true, chars: true })}
+  `;
+}, t => {
   words('r12-k', 72.2);
-  tl.fromTo(I('r12-lower'), { x: -1100 }, { x: 0, duration: 0.6, ease: 'power3.out' }, 72.5);
-  tl.fromTo(I('r12-rx'), { x: -330, y: 420, rotation: -40, opacity: 0, scale: 0.5 }, { x: 0, y: 0, rotation: -6, opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out' }, 72.7);
+  slideIn(I('r12-ph'), 72.05, { y: 200, d: 0.6 });
+  slideIn(I('r12-cu'), 72.1, { x: -400, d: 0.6 });
+  bob('#r12-ph .bodyBob', 72.7, 76.0, 6, 1.1);
+  blink('#r12-ph', 72.2, 76.0, 1.6);
+  blink('#r12-cu', 72.6, 76.0, 1.9);
+  popIn(I('r12-sign'), 72.5, { from: 0.6 });
+  tl.fromTo(I('r12-rx'), { x: -330, y: 420, rotation: -40, opacity: 0, scale: 0.5 }, { x: 0, y: 0, rotation: -6, opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out' }, 72.6);
   tl.fromTo(I('r12-mag'), { opacity: 0, x: -80 }, { opacity: 1, x: -60, duration: 0.3 }, 73.3);
   tl.to(I('r12-mag'), { x: 70, y: 50, duration: 0.45, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 73.6);
   fadeOut(I('r12-mag'), 74.85, 0.2);
   popIn(I('r12-badge'), 73.5, { ease: 'back.out(2.4)' });
-  popIn(I('r12-ptr'), 73.7);
-  bob(I('r12-ptr'), 74.2, 76.0, 8, 0.6);
   popIn(I('r12-ok'), 74.95, { from: 2.3, ease: 'power4.out', d: 0.35 });
   punch('r12', 75.1, 1.05);
+  tl.fromTo('#r12-ph .armL .arm', { rotation: 0, transformOrigin: '50% 5%' }, { rotation: 35, duration: 0.4, yoyo: true, repeat: 1 }, 73.4);
 });
 
 // =====================================================================
@@ -557,7 +553,7 @@ const RNODES = [
   { n: 'Super Stockist', col: C.purple, art: S(0, 34, 0.66, boxArt(80, 70) + S(0, -70, 1, boxArt(64, 56))) },
   { n: 'Distributor', col: C.safD, art: S(0, 32, 0.26, truckArt()) },
   { n: 'Wholesaler', col: C.orange, art: S(0, 44, 0.21, warehouseArt()) },
-  { n: 'Retailer', col: C.coral, art: S(0, 42, 0.18, storeArt()) },
+  { n: 'Retailer', col: C.coral, art: S(0, 42, 0.18, storeArt({ generic: true })) },
   { n: 'You', col: C.green, art: icon.family(0.44) },
 ];
 scene('r15', 84.2, 92.25, '#FFF9F0', 'swipe', () => {
@@ -663,7 +659,7 @@ scene('r17', 95.2, 98.6, '#F4FBF8', 'push', () => `
 scene('r18', 98.6, 103.85, 'url(#skyV)', 'swipe', () => `
   ${G('r18-c1', 260, 820, cloud(0.8, 0.9))}${G('r18-c2', 860, 700, cloud(0.6, 0.85))}
   ${R(-60, 1330, W + 120, 700, '#9AD7AE')}${R(-60, 1420, W + 120, 150, '#6F7D89')}${Array.from({ length: 6 }, (_, i) => R(i * 200 + 20, 1488, 110, 12, '#fff', 6, 'opacity="0.8"')).join('')}
-  ${G('r18-store', 170, 1420, S(0, 0, 0.45, storeArt()))}
+  ${G('r18-store', 175, 1420, S(0, 0, 0.5, storeArt({ short: true })))}
   ${G('r18-house', 560, 1420, house({ w: 460, h: 560, col: '#F7C873', trim: '#E0A94A', tank: true, plant: true }))}
   ${G('r18-old', 800, 1450, S(0, 0, 0.95, person({ style: 'grey', glasses: true, stick: true, shirt: '#8E7CC3', pants: C.ink2, skin: C.skin2, mouth: 'smile' })))}
   ${G('r18-phone', 210, 850, icon.phone(1.0) + `<g class="ok" opacity="0">${S(52, -90, 0.85, icon.check())}</g>`)}
@@ -751,7 +747,7 @@ scene('r20', 110.45, 114.5, 'url(#sunV)', 'iris', () => `
   ${P(`M${VP.x - 24},${VP.y} L${VP.x + 24},${VP.y} L1000,1990 L80,1990Z`, '#6F7D89')}
   ${P(`M${VP.x - 24},${VP.y} L${VP.x - 18},${VP.y} L150,1990 L80,1990Z`, '#fff', 'opacity="0.7"')}${P(`M${VP.x + 18},${VP.y} L${VP.x + 24},${VP.y} L1000,1990 L930,1990Z`, '#fff', 'opacity="0.7"')}
   <g id="r20-dashes">${Array.from({ length: 9 }, (_, i) => G(`r20-d${i}`, VP.x, VP.y, R(-8, -26, 16, 52, '#fff', 6))).join('')}</g>
-  <g id="r20-flow">${Array.from({ length: 22 }, (_, k) => 21 - k).map(i => G(`r20-f${i}`, VP.x, VP.y, S(0, 0, 1, storeArt()))).join('')}</g>
+  <g id="r20-flow">${Array.from({ length: 22 }, (_, k) => 21 - k).map(i => G(`r20-f${i}`, VP.x, VP.y, S(0, 0, 1, storeArt({ short: true })))).join('')}</g>
   <g id="r20-birds">${[[160, 610, 1], [250, 660, 0.7], [880, 560, 0.85]].map(([x, y, k], i) => G(`r20-b${i}`, x, y, S(0, 0, k, `<g class="wing">${L('M-30,0 Q-15,-16 0,0 Q15,-16 30,0', C.ink2, 5)}</g>`))).join('')}</g>
   ${chipV('r20-v', 540, 290, 'OUR VISION', { size: 50, bg: C.saf, fg: C.ink, w: 800 })}
   ${KT('r20-k', 540, 455, 'Grow the network,|*step by step*', { size: 84, chars: true })}
@@ -908,5 +904,5 @@ window.afterBuild = () => {
 // per-scene ambient particle colours
 const FX = { r1: FX_W, r2: FX_S, r3: FX_T, r4: FX_S, r5: FX_B, r6: FX_T, r7: FX_W, r8: FX_B, r9: FX_B, r10: FX_C, r11: FX_S, r12: FX_W, r13: FX_P, r14: FX_B, r15: FX_S, r16: FX_C, r17: FX_T, r18: FX_W, r19: FX_T, r20: FX_S, r21: FX_T };
 SCENES.forEach(s => { if (FX[s.id]) s.fxCols = FX[s.id]; });
-window.WARM = [19.5, 74.0];
+window.WARM = [23.5, 121.0];
 init();

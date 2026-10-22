@@ -129,10 +129,13 @@ function storeArt(o = {}) {
     ${shadow(hw + 40, 22, 4)}
     ${R(-hw, -H, W, H, '#FFFFFF', 10)}${R(-hw, -H, W, H, 'none', 10, 'stroke="#E3E8EC" stroke-width="4"')}
     ${R(-hw - 16, -H - 20, W + 32, 32, C.tealD, 10)}
-    <g class="sign">${R(-hw + 18, -H + 14, W - 36, 98, o.name ? C.teal : C.lime, 16)}${o.name ? '' : R(-hw + 18, -H + 96, W - 36, 16, C.limeD, 0)}
+    ${o.generic
+      ? `<g class="sign">${R(-hw + 18, -H + 14, W - 36, 98, '#5B7489', 16)}${T(0, -H + 80, 'MEDICAL STORE', { size: 50, fill: '#fff', w: 800 })}</g>`
+      : `<g class="sign signFull" ${o.short ? 'opacity="0"' : ''}>${R(-hw + 18, -H + 14, W - 36, 98, o.name ? C.teal : C.lime, 16)}${o.name ? '' : R(-hw + 18, -H + 96, W - 36, 16, C.limeD, 0)}
       ${S(-hw + 80, -H + 63, 1, logoMark(o.name ? 34 : 42))}
       ${T(o.name ? 36 : 48, -H + (o.name ? 80 : 76), o.name || 'Jan Seva Dawa Bazaar', { size: o.signSize || (o.name ? 46 : 34), fill: o.name ? '#fff' : C.tealD, w: 800 })}
-    </g>
+    </g>` + (o.name ? '' : `<g class="sign signShort" ${o.short ? '' : 'opacity="0"'}>${R(-hw + 18, -H + 14, W - 36, 98, C.lime, 16)}${R(-hw + 18, -H + 96, W - 36, 16, C.limeD, 0)}
+      ${S(-110, -H + 63, 1, logoMark(46))}${T(50, -H + 92, 'JSDB', { size: 82, fill: C.tealD, w: 800, ls: 4 })}</g>`)}
     ${awn}
     <g class="window">${R(-262, -250, 324, 236, '#DFF1FA', 8)}${R(-262, -250, 324, 236, 'none', 8, `stroke="${C.tealD}" stroke-width="10"`)}${goods}
       ${P('M-240,-240 L-170,-240 L-250,-30 L-255,-30Z', '#fff', 'opacity="0.35"')}</g>
